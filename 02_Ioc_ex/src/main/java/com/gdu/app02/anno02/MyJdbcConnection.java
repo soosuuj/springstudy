@@ -1,4 +1,4 @@
-package com.gdu.app02.xml02;
+package com.gdu.app02.anno02;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
