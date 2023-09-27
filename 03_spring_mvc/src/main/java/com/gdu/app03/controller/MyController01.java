@@ -22,6 +22,8 @@ public class MyController01 {
    * 3. 매개변수  //controller 이기 때문에 가능
    *  1) HttpServletRequest를 선언해서 사용 할 수 있다.
    *  2) HttpServletRespose를 선언해서 사용할 수 있다.
+   *  3) Model을 선언해서 forward할 정보를 저장할 수 있다.
+   *  4) HttpSession을 선언해서 사용할 수 있다. 
    * 4. 요청(@RequestMapping) 
    *  1) 요청 메소드 : GET, POST
    *  2) URL         : 요청 주소 

@@ -22,7 +22,28 @@
     <br>
     <a href="${contextPath}/member/list.do">member 목록</a>
   </div>
+  
+  
+  <%-- MyContoller3으로 요청 --%>
+  <div>
+    <a href="${contextPath}/blog/detail.do?blogNo=100">블로그 상세 보기</a>
+  </div>
    
+  <%-- MyContoller4으로 요청 --%>
+  <div>
+    <a href="${contextPath}/article/add.do?title=이럴수가">기사 등록하기</a>
+  </div>
+  
+   
+  <%-- 세션지우기  ${sessionScope.title} --%>
+
+  <br>
+    <a href="${contextPath}/article/confirm.do">세션 확인하기</a>
+  
+
+
+
+
    
 </body>
 </html>
