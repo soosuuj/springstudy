@@ -17,6 +17,11 @@
   <br>
   ${blogDto.getBlogNo()}
   <br>
+  <!--  controller 마지막꺼 출력
+      ${blogDto.blogNo}과 같은 방법인데,
+      model.addAttribute("dto", yourDtoObject); // "dto"라는 이름으로 모델에 데이터를 추가 
+      이런식으로 모델에 저장이 되어있어야 출력된다.-->
   ${dto.blogNo}
+  
 </body>
 </html>

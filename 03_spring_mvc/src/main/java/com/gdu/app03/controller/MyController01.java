@@ -42,6 +42,23 @@ public class MyController01 {
     return "index";
   }
   
+  /*
+   * 이 코드는 Java Spring Framework에서 컨트롤러 메서드를 정의하는 부분을 나타냅니다.
+   *  코드를 통해 웹 어플리케이션의 루트 경로 ("/") 및 "/main.do" 경로에 대한 HTTP GET 요청을 처리하는 메서드를 정의. 
+
+1. `@RequestMapping` 어노테이션: 
+이 어노테이션은 컨트롤러 클래스나 메서드에 부여하여 특정 요청 경로나 HTTP 메서드에 대한 매핑을 설정합니다.
+`value` 속성에 배열로 두 가지 경로를 지정, `method` 속성에 `RequestMethod.GET`을 설정하여 HTTP GET 요청을 처리.
+
+2. `public String welcome()`: 
+이 메서드는 HTTP GET 요청을 처리하는 메서드입니다. 메서드의 반환 타입은 `String`으로 지정되어 있으며,
+보통 뷰 이름을 나타냅니다. 즉, 이 메서드가 실행되고 나면 클라이언트에게 보여줄 뷰의 이름을 반환합니다.
+
+이 코드는 두 가지 경로 ("/" 및 "/main.do")에 대한 HTTP GET 요청을 처리하고, 
+해당 요청에 대한 응답으로 "index" 뷰를 반환하며, `ViewResolver`를 통해 실제 JSP 파일 경로를 결정. 
+이것은 Spring 웹 애플리케이션에서 화면을 렌더링하는 방법 중 하나입니다.
+   */
+  
   @RequestMapping(value="/board/list.do", method=RequestMethod.GET)
   public String boardList() {
     return "board/list";    //  /WEB-INF/views/board/list.jsp

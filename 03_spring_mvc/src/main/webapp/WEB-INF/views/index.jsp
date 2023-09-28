@@ -38,7 +38,6 @@
   <%-- 세션지우기  ${sessionScope.title} --%>
 
   <br>
-    <a href="${contextPath}/article/confirm.do">세션 확인하기</a>
   
 
 

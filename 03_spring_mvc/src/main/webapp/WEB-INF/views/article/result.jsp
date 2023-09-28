@@ -27,6 +27,7 @@
  <br>
   
   <a href="${contextPath}/article/confirm.do">세션 확인하기</a>
+  
 
 </body>
 </html>
