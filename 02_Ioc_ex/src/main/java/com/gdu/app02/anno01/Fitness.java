@@ -12,6 +12,7 @@ import lombok.NoArgsConstructor;
 public class Fitness {
   
   private String name;
+  // 여러 회원 객체를 저장하고 관리 - 확장성(회원수에 제한없이 필요한만큼의 정보 저장)
   private List<Member> members;
   
 

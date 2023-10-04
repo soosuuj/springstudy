@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @Data
 public class MyJdbcConnection {
   private String driver;   // oracle.jdbc.OracleDriver
-  private String url;      // jdbc:oracle:thin:@127.0.0.1:1521:xe  <- 서버아이피 자라ㅣ
+  private String url;      // jdbc:oracle:thin:@127.0.0.1:1521:xe  <- Server IP 
   private String user;     // GD
   private String password; // 1111
   
