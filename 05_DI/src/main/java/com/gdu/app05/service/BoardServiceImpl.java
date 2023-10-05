@@ -3,10 +3,18 @@ package com.gdu.app05.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import com.gdu.app05.dao.BoardDao;
 import com.gdu.app05.dto.BoardDto;
 
+import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
+
+@RequiredArgsConstructor   // final field 전용 생성자 @AllArgsConstructor는 오바
+                           // @Autowired를 이용한 생성자 주입을 위해서 추가한다.
+@Service  // 서비스 계층(Business Layer) 전용 @component, Spring Container에 BoardService boardServiceImpl 객체를 생성해둔다.
 public class BoardServiceImpl implements BoardService {
   
   /*
@@ -24,13 +32,29 @@ public class BoardServiceImpl implements BoardService {
    *  
    */ 
   
-  @Autowired
-  private BoardDao boardDao;
-
+  // 필드 직접 주입 불가 final
+  //@Autowired
+  private final BoardDao boardDao;
+  
+  // 생성자를 이용한 주입만 가능
+  //주입된 boardService 객체의 변경 방지를 위한 final처리
+  // @Autowired  -> 생략해도 작동 스프링 4버전 부터
+//  public BoardServiceImpl(BoardDao boardDao) {
+//    super();
+//    this.boardDao = boardDao;
+//  }
+//  
+  
+  
+  // setter
+  
+ 
 
   @Override
   public List<BoardDto> getBoardList() {
     return boardDao.getBoardList();
   }
+
+
 
 }

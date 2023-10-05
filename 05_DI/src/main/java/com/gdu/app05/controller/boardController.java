@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.gdu.app05.service.BoardService;
 import com.gdu.app05.service.BoardServiceImpl;
 
-@Controller
+@Controller  // component 기능 들어가 있음
 public class boardController {
   
   //private BoardService boardService = new BoardServiceImpl();
@@ -17,8 +17,6 @@ public class boardController {
   // 1) 컨테이너에 서비스 넣는다 (넣는방법 
   //    1) <bean>태그, 2) @configuration + @bean, 3) 
   // 2) 컨터에너에서 서비스 빼낸다 
-  
-  //
   
   
   /*
@@ -68,14 +66,38 @@ public class boardController {
     
     // <bean class="com.gdu.app05.service.BoardServiceImpl" id="boardService" /> 자동 주입
     // inject 기반은 타입이 없으면 이름으로 찾아줌 @Autowired 
-  @Autowired  
-  private BoardService boardService;
+ 
+  /****************************Method************************************/
+  
+  // 1) 필드 주입
+  // 가지고 와서 사용 -> 서비스이 임의의 변경을 방지하기 위해서 final 처리 -> 실무
+  // 주입된 boardService 객체의 변경 방지를 위한 final처리
+
+  private final BoardService boardService;
+  
+  
+  // 2) 생성자
+//  @Autowired
+//  public boardController(BoardService boardService) {
+//    super();
+//    this.boardService = boardService;
+//  }
+  
+  
+  // 3) 세터
+//  @Autowired // setter 형식의 메소드에 주입하기
+//  public void setBoardService(BoardService boardService) {
+//    this.boardService = boardService;
+//  }
+
     
-//    @Autowired  // 생성자를 만들고 생성자에 주입하기
-//    public boardController(BoardService boardService) {
-//      super();
-//      this.boardService = boardService;
-//    }
+    @Autowired  // 생성자를 만들고 생성자에 주입하기
+    // boarService에 final 처리를 하면 생성자 주입만 가능하다. (필드 주입과 Setter 주입은 불가능하다.)
+    // 생성자 주입의 @Autowired는 생략할 수 있으므로 @RequiredArqusConstructor와 같은 Annotation으로 대체 할 수 있다.
+    public boardController(BoardService boardService) {
+      super();
+      this.boardService = boardService;
+    }
 
     @RequestMapping(value="/board/list.do", method=RequestMethod.GET)
     public String list(Model model) {
@@ -84,10 +106,6 @@ public class boardController {
     // 콘트 -> 서비스 -> 다오 -> 디비작업
   }
 
-    @Autowired // setter 형식의 메소드에 주입하기
-    public void setBoardService(BoardService boardService) {
-      this.boardService = boardService;
-    }
     
     // 스프링컨테이너 1 빈테그 -> 필드에 오토와이어 -> 생성자에 오토와이어/세터 메소드에 오토와이어 중 한가지 방법 쓰기
     // 컨테이너에 만들어진 객체를 가져올 수 있다.. ㅎ

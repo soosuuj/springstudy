@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.gdu.app03.dto.BlogDto;
 
+@RequestMapping("/blog")  // /blog로 시작하는 요청을 처리하는 컨트롤러 
+                                  // 모든 메소드의 요청에 "/blog" 가 자동으로 삽입된다.
+                                  //(value = "/blog") 
 @Controller
 public class MyController03 {
   
@@ -53,7 +56,7 @@ public class MyController03 {
    *      -> 
    */
   
-  //@RequestMapping("/blog/detail.do")
+  //@RequestMapping("/blog/detail.do")  -> ("/detail.do")
   public String blogDetail2(@RequestParam(value="blogNo") int blogNo, Model model) {
   //public String blogDetail2(int blogNo, Model model) {  // 지워도 돌아감
     model.addAttribute("blogNo", blogNo);
@@ -71,7 +74,7 @@ public class MyController03 {
             -> 이걸 쓸일이 없어서 별로 안중요.. 저장 정보는 db로 보내지 jsp로 보내지 않기 때문에
    */
   
-  //@RequestMapping("/blog/detail.do")   
+  //@RequestMapping("/detail.do")   
   public String blogDetail3(BlogDto dto) {  // ★주의 - Model에 저장된 이름은 dto가 아니라  ★blogDto ★이다.
     // model.addAttribute("blogDto", dto);      // 저장하는 이름 의도적으로 변경 , 포워딩 정보가 없어진상태 
     // System.out.println(dto.getBlogNo());  // 3번
@@ -125,7 +128,7 @@ public class MyController03 {
   // @ModelAttribute를 이용해서 Model에 저장되는 커맨드 객체의 이름을 지정할 수 있다. 
   // 특이한 특징이 안중요함
   
-  @RequestMapping("/blog/detail.do")
+  @RequestMapping("/detail.do")
   public String bligDetail4(@ModelAttribute("dto") BlogDto blogDto) {  // Model에 저장되는 이름은 dto이다. 이름 바꾸고 싶으면 바꿔라..modelAttribute 이용.. 아주 재밌죠?
     return "blog/detail";
   }
