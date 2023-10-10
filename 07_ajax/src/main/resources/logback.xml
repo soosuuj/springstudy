@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration>
+
+	<!-- Appenders : 로그를 출력하는 Appender 모음 -->
+  
+    <!-- 
+      %date{날짜시간패턴} : 로그기록시간 (SimpleDateFormat과 같은 날짜시간 패턴)
+      %level              : 로그 레벨 (OFF > ERROR > WARN > INFO > DEBUG > TRACE)
+      %logger             : 로그를 찍는 클래스 (어떤 클래스가 동작할 때 로그가 남겨지는가?)
+      %mgs                : 로그 메시지
+      %n                  : 줄 바꿈   
+     -->
+  
+    <!-- Console에 로그를 찍는 Appender -->
+	<appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+      <encoder>
+        <pattern>[%date{HH:mm:ss, Asia/Seoul}]%-5level:%logger-%msg%n</pattern>
+      </encoder>
+	</appender>
+	
+	<!-- Application Loggers -->
+	<logger name="com.gdu.app07">
+		<level value="info" />
+	</logger>
+	
+	<!-- 3rdparty Loggers -->
+	<logger name="org.springframework.core">
+		<level value="info" />
+	</logger>
+	
+	<logger name="org.springframework.beans">
+		<level value="info" />
+	</logger>
+	
+	<logger name="org.springframework.context">
+		<level value="info" />
+	</logger>
+
+	<logger name="org.springframework.web">
+		<level value="info" />
+	</logger>
+
+	<!-- Root Logger -->
+	<root>
+		<priority value="warn" />
+		<appender-ref ref="console" />
+	</root>
+	
+</configuration>

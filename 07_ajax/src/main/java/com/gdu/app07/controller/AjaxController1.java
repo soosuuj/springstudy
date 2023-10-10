@@ -15,7 +15,7 @@ import lombok.RequiredArgsConstructor;
 
 @RequestMapping("/ajax1")  // 주소 "/ajax1/list.do" 에서 변경
 @RequiredArgsConstructor   // final
-@Controller
+@Controller 
 public class AjaxController1 {
   
   private final AjaxService ajaxService;
@@ -25,7 +25,7 @@ public class AjaxController1 {
   @ResponseBody  // 메소드의 반환 값이 응답 데이터이다.
   @RequestMapping(value = "/list.do", method=RequestMethod.GET
                                           , produces = "application/json; charser=UTF-8")
-                                           //produce : 응답 데이터 타입
+                                           //produce : 응답 데이터 타입 
   public List<AjaxDto> list(){
     return ajaxService.getDtoList();  // jackson 라이브러리가 List<AjaxDto>를 json 데이터(배열)로 자동 변환한다.
   }
@@ -36,9 +36,5 @@ public class AjaxController1 {
       return ajaxService.getDto(name);  // jackson 라이브러리가 AjaxDto를 json 데이터(객체)로 자동 변환한다.
   }
 
-  
-  
-  
-  
-
+ 
 }

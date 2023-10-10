@@ -67,7 +67,7 @@ public class boardController {
     // <bean class="com.gdu.app05.service.BoardServiceImpl" id="boardService" /> 자동 주입
     // inject 기반은 타입이 없으면 이름으로 찾아줌 @Autowired 
  
-  /****************************Method************************************/
+  /************************** DI ************************************/
   
   // 1) 필드 주입
   // 가지고 와서 사용 -> 서비스이 임의의 변경을 방지하기 위해서 final 처리 -> 실무
@@ -98,6 +98,9 @@ public class boardController {
       super();
       this.boardService = boardService;
     }
+    
+    /************************** Method ************************************/
+
 
     @RequestMapping(value="/board/list.do", method=RequestMethod.GET)
     public String list(Model model) {
