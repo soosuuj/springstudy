@@ -1,11 +1,11 @@
- package com.gdu.app09.service;
+ package com.gdu.app10.service;
 
 import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.gdu.app09.dao.ContactDao;
-import com.gdu.app09.dto.ContactDto;
+import com.gdu.app10.dao.ContactDao;
+import com.gdu.app10.dto.ContactDto;
 
 import lombok.RequiredArgsConstructor;
 
