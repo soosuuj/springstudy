@@ -60,5 +60,16 @@
     <appender-ref ref="console" />
     <appender-ref ref="rolling" />
   </root>
+  <!-- <root>: 루트 로거를 나타내는 엘리먼트입니다. 
+  이 부분은 모든 로그 이벤트에 대한 설정을 정의합니다.
+
+<priority value="warn" />: 루트 로거의 기본 로그 레벨을 설정합니다.
+ "warn"으로 설정되어 있으므로, 루트 로거에서는 "warn" 레벨 이상의 로그 이벤트만을 출력. 
+ 즉, "ERROR"와 "WARN" 레벨의 로그 이벤트만이 출력될 것입니다.
+
+<appender-ref ref="console" />: 루트 로거에 "console" Appender를 추가. 콘솔에 출력되도록 설정.
+
+<appender-ref ref="rolling" />: 루트 로거에 "rolling" Appender를 추가. 롤링 파일(Appender)에 출력되도록 설정. -->
+  
   
 </configuration>

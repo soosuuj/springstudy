@@ -2,6 +2,9 @@ package com.gdu.app09;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+
+import java.util.List;
 
 import org.junit.FixMethodOrder;
 import org.junit.Test;
@@ -55,12 +58,39 @@ public class ContactUnitTest {
     assertNotNull(contactDto);  // contactDtork not null 이면 테스트 성공이다.
   }
   
+  @Test
+  public void test03_0수정테스트() {
+    int contact_no = 1; // 수정할 연락처 번호
+    ContactDto contactDto = new ContactDto(contact_no, "수정이름", "수정연락처", "수정이메일", "수정주소", "");
+    int modifyResult = contactDao.update(contactDto);
+    assertEquals(1, modifyResult);
+  }
+  
+  @Test
+  public void test04_0목록조회테스트() {
+      List<ContactDto> contactList = contactDao.selectList();
+      assertNotNull(contactList);
+      assertTrue(contactList.size() > 0); // 목록이 비어있지 않아야 함
+  }
+
+  @Test
+  public void test05_0상세조회테스트() {
+      int contact_no = 1; // 조회할 연락처 번호
+      ContactDto contact = contactDao.selectContactByNo(contact_no);
+      assertNotNull(contact);
+      assertEquals(contact_no, contact.getContact_no());
+  }
+
+  
   @Test  // 테스트 수행
-  public void test03_삭제테스트() {
+  public void test06_삭제테스트() {
     int contact_no = 1;
     int deleteResult  = contactDao.delete(contact_no);
     assertEquals(1, deleteResult);  // deleteResult가 1이면 test 성공
     // assertNull(contactDao.selectContactByNo(contact_no)); select 결과가 null이면 테스트 성공이다. 
   }
+  
+  
+
 
 }

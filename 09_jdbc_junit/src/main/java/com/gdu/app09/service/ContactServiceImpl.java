@@ -36,7 +36,6 @@ public class ContactServiceImpl implements ContactService {
 
   @Override
   public List<ContactDto> getContactList() {
-    // TODO Auto-generated method stub
     return contactDao.selectList();
   }
 

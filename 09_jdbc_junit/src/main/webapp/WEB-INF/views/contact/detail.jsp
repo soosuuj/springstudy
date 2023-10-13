@@ -48,7 +48,7 @@
 
   <div>
     <h3>연락처관리</h3>
-    <form  id="frn_detail" method="post" action="${contextPath}/contact/modify.do">
+    <form  id="frm_detail" method="post" action="${contextPath}/contact/modify.do">
       <div>
         <label for="name">이름</label>
         <input type="text" id="name" name="name" value="${contact.name}">
