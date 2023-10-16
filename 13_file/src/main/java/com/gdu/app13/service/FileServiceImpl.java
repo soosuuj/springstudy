@@ -14,7 +14,7 @@ import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @Service
-public class FileServiceImpl implements FileSerive {
+public class FileServiceImpl implements FileService {
 
   private final MyFileUtil myFileUtil;
   
@@ -22,9 +22,9 @@ public class FileServiceImpl implements FileSerive {
   public int upload(MultipartHttpServletRequest multipartRequest) {
 
     // 첨부된 파일들의 목록
-    List<MultipartFile> files = multipartRequest.getFiles("files");   // 파라미터가져오는거 name -> files
+    List<MultipartFile> files = multipartRequest.getFiles("files");
     
-    // 순회 - 여러개 첨부
+    // 순회
     for(MultipartFile multipartFile : files) {
       
       // 첨부 여부 확인
@@ -66,12 +66,12 @@ public class FileServiceImpl implements FileSerive {
   }
   
   @Override
-  public Map<String, Object> ajaxUpload(MultipartHttpServletRequest multiparRequest) {
+  public Map<String, Object> ajaxUpload(MultipartHttpServletRequest multipartRequest) {
     
     // 첨부된 파일들의 목록
-    List<MultipartFile> files = multiparRequest.getFiles("files");   // 파라미터가져오는거 name -> files
+    List<MultipartFile> files = multipartRequest.getFiles("files");
     
-    // 순회 - 여러개 첨부
+    // 순회
     for(MultipartFile multipartFile : files) {
       
       // 첨부 여부 확인
@@ -103,12 +103,13 @@ public class FileServiceImpl implements FileSerive {
         } catch (Exception e) {
           e.printStackTrace();
         }
+        
       }
-  
+      
     }
-  
-  return Map.of("success", true);
-  
-}
-  
+    
+    return Map.of("success", true);
+    
+  }  
+
 }

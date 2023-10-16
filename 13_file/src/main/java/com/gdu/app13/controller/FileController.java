@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.gdu.app13.service.FileSerive;
+import com.gdu.app13.service.FileService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -19,12 +19,12 @@ import lombok.RequiredArgsConstructor;
 public class FileController {
   
  
-  private final FileSerive fileSerive;
+  private final FileService fileService;
   
   
   @RequestMapping(value="/upload.do", method=RequestMethod.POST)
   public String upload(MultipartHttpServletRequest multipartRequest, RedirectAttributes redirectAttributes) {
-   int addResult =  fileSerive.upload(multipartRequest);
+   int addResult =  fileService.upload(multipartRequest);
    redirectAttributes.addFlashAttribute("addResult", addResult);
     return "redirect:/main.do";  
   }
@@ -36,7 +36,7 @@ public class FileController {
   // json 보낼거면 Map / 배열 보낼 때 list ..
   // jackson map이나 list보내면 쟤가 알아서 배열로 바꿔줌.. 7장 이후로 계속 가지고 다님 pom.xml 있다..
   public Map<String, Object> ajaxUpload(MultipartHttpServletRequest multipartRequest) {
-    return fileSerive.ajaxUpload(multipartRequest);
+    return fileService.ajaxUpload(multipartRequest);
   }
   
   
