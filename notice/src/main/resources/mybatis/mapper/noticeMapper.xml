@@ -11,6 +11,20 @@
      WHERE NOTICE_NO = #{noticeNo}
      
   </delete>
+  
+  <insert id="addNotice" parameterType="NoticeDto">
+    INSERT INTO NOTICE_T (
+        NOTICE_NO
+      , GUBUN
+      , TITLE
+      , CONTENT
+    ) VALUES (
+        NOTICE_SEQ.NEXTVAL
+      , #{gubun}
+      , #{title}
+      , #{content}
+    )
+  </insert>
 
   <update id="modifyNotice" parameterType="NoticeDto">
     UPDATE NOTICE_T
@@ -26,19 +40,6 @@
      WHERE NOTICE_NO = #{noticeNo}
   </select>
 
-  <insert id="addNotice" parameterType="NoticeDto">
-    INSERT INTO NOTICE_T (
-        NOTICE_NO
-      , GUBUN
-      , TITLE
-      , CONTENT
-    ) VALUES (
-        NOTICE_SEQ.NEXTVAL
-      , #{gubun}
-      , #{title}
-      , #{content}
-    )
-  </insert>
 
   <select id="getNoticeList" resultType="NoticeDto">
     SELECT NOTICE_NO, GUBUN, TITLE, CONTENT

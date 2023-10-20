@@ -7,12 +7,12 @@ import org.apache.ibatis.annotations.Mapper;
 
 import com.gdu.app14.dto.MemberDto;
 
-@Mapper  // myBatis 가 제공하는 기능(Spring 아님)
+@Mapper
 public interface MemberMapper {
-  
+
   // 삽입
   public int insertMember(MemberDto memberDto);
- 
+  
   // 목록
   public List<MemberDto> getMemberList(Map<String, Object> map);
   
@@ -22,13 +22,13 @@ public interface MemberMapper {
   // 회원 조회
   public MemberDto getMember(int memberNo);
   
-  // 회원 수정
+  // 회원 정보 수정
   public int updateMember(MemberDto memberDto);
   
-  // 회원 삭제
+  // 회원 정보 삭제
   public int deleteMember(int memberNo);
-
   
+  // 회원들 정보 삭제
+  public int deleteMembers(List<String> list);
   
-
 }
