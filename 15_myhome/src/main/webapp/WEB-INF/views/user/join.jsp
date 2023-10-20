@@ -10,13 +10,7 @@
   <jsp:param value="회원가입" name="title"/>
 </jsp:include>
 
-<script src="${contextPath}/resources/js/user_join.js"></script>
-
-<script>
-
-
-
-</script>
+<script src="${contextPath}/resources/js/user_join.js?dt=${dt}"></script>
 
 <div>
 
@@ -26,25 +20,20 @@
     
     <div>
       <div>
-      <label for="email">이메일</label>
-      <input type="text" name="email" id="email">
-      <button type="button" id="btn_get_code">인증코드받기</button>
-      <span id="mas_email"></span>
-    </div>
-    <div>
-      <input type="text" id="code" placeholder="인증코드입력">
-      <button type="button" id="btn_verify_code">인증하기</button>
+        <label for="email">이메일</label>
+        <input type="text" name="email" id="email">
+        <button type="button" id="btn_get_code">인증코드받기</button>
+        <span id="msg_email"></span>
+      </div>
+      <div>
+        <input type="text" id="code" placeholder="인증코드입력" disabled>
+        <button type="button" id="btn_verify_code" disabled>인증하기</button>
+      </div>
     </div>
     
-    </div>
-    
-    <hr>
-    
-
-
     <div>
       <input type="hidden" name="event" value="${event}">
-      <button type="submit">회원가입</button>
+      <button type="submit">회원가입하기</button>
     </div>
     
   </form>

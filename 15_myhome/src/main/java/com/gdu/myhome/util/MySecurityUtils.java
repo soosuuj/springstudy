@@ -32,7 +32,7 @@ public class MySecurityUtils {
     return sb.toString();
   }
   
-  // 인증 코드 반환
+  // 인증코드 반환
   public String getRandomString(int count, boolean letters, boolean numbers) {
     return RandomStringUtils.random(count, letters, numbers);
   }
