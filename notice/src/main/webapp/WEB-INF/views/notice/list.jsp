@@ -13,9 +13,9 @@
   var addResult = '${addResult}';  // '', '1', '0'
   if(addResult !== ''){
 	  if(addResult === '1'){
-		  alert('공지사항이 등록되었습니다.');
+		  alert('게시글이 등록되었습니다.');
 	  } else {
-		  alert('공지사항이 등록되지 않았습니다.');
+		  alert('게시글이 등록되지 않았습니다.');
 	  }
   }
   

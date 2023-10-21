@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.gdu.app100.dao.BoardMapper">
+
+  <insert id="addBoard" parameterType="BoardDto">
+      INSERT INTO MVC_BOARD_T(NO, AUTHOR, TITLE, CONTENT, HIT, IP, POSTDATE)
+      VALUES(MVC_BOARD_SEQ.NEXTVAL, #{author}, #{title}, #{content}, 3, '127.0.0.1', TO_CHAR(SYSDATE, 'YYYY-MM-DD'))
+  </insert>
+
+  <delete id="deleteBoard" parameterType="int">
+  DELETE FROM MVC_BOARD_T WHERE NO = #{no}
+  </delete>
+  
+  <select id="getBoardDto" parameterType="int" resultType="BoardDto">
+    SELECT NO, AUTHOR, TITLE, CONTENT, HIT, IP, POSTDATE FROM MVC_BOARD_T WHERE NO = #{no}
+  </select>
+  
+  <select id="getBoardList" resultType="BoardDto">
+    SELECT NO, AUTHOR, TITLE, CONTENT, HIT, IP, POSTDATE FROM MVC_BOARD_T ORDER BY NO DESC
+  </select>
+
+  
+  
+
+  
+  
+  
+</mapper>

@@ -64,16 +64,20 @@
 <body>
 
   <div id="detail_screen">
-    <h1>${member.memberNo}번 공지사항</h1>
-    <div>아이디 : ${member.id}</div>
-    <div>이름 : ${member.name}</div>
-    <div>성별 : ${member.gender}</div>
+    <h1>MvcBoard 게시글 상세보기화면</h1>
+    <h1>${member.memberNo}번 게시글</h1>
+    <div>작성자 : ${member.id}</div>
+    <div>작성일 : ${member.name}</div>
+    <div>작성IP : ${member.gender}</div>
+    <div>조회수 : ${member.gender}</div>
+    <div>제목 : ${member.gender}</div>
+    <div>내용 : ${member.gender}</div>
     <hr>
     <div>
         <button type="button" id="btn_edit">편집</button>
-        <button type="button" id="btn_remove">삭제</button>
+        <button type="button" id="btn_remove">삭제하기</button>
         <!-- GETMapping으로 바꿔서 써야함 -->
-        <button type="button" class="btn_list">목록</button>
+        <button type="button" class="btn_list">목록보기</button>
     </div>
   </div>
   
