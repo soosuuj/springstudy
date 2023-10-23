@@ -14,6 +14,15 @@
   DELETE FROM MVC_BOARD_T WHERE NO = #{no}
   </delete>
   
+  <update id="modifyBoard" parameterType="BoardDto">
+    UPDATE MVC_BOARD_T
+    SET AUTHOR = #{author},
+        TITLE = #{title},
+        CONTENT = #{content}
+    WHERE NO = #{no}
+  </update>
+
+  
   <select id="getBoardDto" parameterType="int" resultType="BoardDto">
     SELECT NO, AUTHOR, TITLE, CONTENT, HIT, IP, POSTDATE FROM MVC_BOARD_T WHERE NO = #{no}
   </select>

@@ -20,7 +20,7 @@ public class UserDto {
   private String gender; 
   private String mobile; 
   private String postcode; 
-  private String radoAddress; 
+  private String roadAddress; 
   private String jibunAddress;
   private String detailAddress; 
   private int agree; 

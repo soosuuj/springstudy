@@ -11,6 +11,7 @@
     <where>
       <if test="email != null">EMAIL = #{email}</if>
       <if test="pw != null">AND PW = #{pw}</if>
+      <if test="userNo != null">AND USER_NO = #{userNo}</if>
     </where>
   </select>
   
@@ -35,6 +36,74 @@
       FROM INACTIVE_USER_T
      WHERE EMAIL = #{email}
   </select>
+
+  <insert id="insertUser" parameterType="UserDto">
+    INSERT INTO USER_T (
+        USER_NO
+      , EMAIL
+      , PW
+      , NAME
+      , GENDER
+      , MOBILE
+      , POSTCODE
+      , ROAD_ADDRESS
+      , JIBUN_ADDRESS
+      , DETAIL_ADDRESS
+      , AGREE
+      , PW_MODIFIED_AT
+      , JOINED_AT
+    ) VALUES (
+        USER_SEQ.NEXTVAL
+      , #{email}
+      , #{pw}
+      , #{name}
+      , #{gender}
+      , #{mobile}
+      , #{postcode}
+      , #{roadAddress}
+      , #{jibunAddress}
+      , #{detailAddress}
+      , #{agree}
+      , SYSDATE
+      , SYSDATE
+    )
+  </insert>
+
+  <update id="updateUser" parameterType="int">
+    UPDATE USER_T
+       SET NAME =#{name}
+         , GENDER = #{gender}
+         , MOBILE = #{mobile}
+         , POSTCODE = ${postCode} 
+         , ROAD_ADDRESS = ${roadAddress}
+         , GIBUN_ADDRESS = ${jibunAddress}
+         , DETAIL_ADDRESS = ${detailAddress}
+         , AGREE = ${agree}
+    WHERE USER_NO = ${userNo}
+  </update>
+
+
+  <insert id="insertLeaveUser" parameterType="UserDto">
+    INSERT INTO LEAVE_USER_T(
+      EMAIL
+    , JOINED_AT
+    , LEAVED_AT
+    ) VALUES (
+      #{email}
+    , #{joinedAt}
+    , SYSDATE
+    )
+  </insert>
+  
+  <delete id="deleteUser" parameterType="UserDto">
+    DELETE
+      FROM USER_T
+     WHRER USER_NO = #{userNo}
+  </delete>
+
+
+
+
 
   
   

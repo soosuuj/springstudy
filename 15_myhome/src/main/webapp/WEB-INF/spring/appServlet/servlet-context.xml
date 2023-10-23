@@ -23,6 +23,20 @@
 	
 	<context:component-scan base-package="com.gdu.myhome" />
 	
-	
+	<interceptors>
+		<interceptor>
+		<mapping path="/user/mypage.form"/>
+		<mapping path="/user/modifyPw.form"/>
+			<beans:bean class="com.gdu.myhome.intercept.LoginStatusCheckInterceptor"/>
+		</interceptor>
+    
+    
+      <interceptor>
+        <mapping path="/user/agree.from"/>
+        <mapping path="/user/join.from"/>
+        <mapping path="/user/login.from"/>
+          <beans:bean class="com.gdu.myhome.intercept.shoulNot" />
+      </interceptor>
+	</interceptors>
 	
 </beans:beans>

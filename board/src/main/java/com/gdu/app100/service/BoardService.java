@@ -10,6 +10,7 @@ public interface BoardService {
   public BoardDto getBoardDto(int no);
   public List<BoardDto> getBoardList();
   int deleteBoard(int no);
+  int modifyBoard(BoardDto boardDto);
 
 
 }

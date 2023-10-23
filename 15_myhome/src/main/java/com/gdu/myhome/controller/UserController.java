@@ -76,4 +76,32 @@ public class UserController {
   }
   
   
+  // 반환 void 서비비스가 직접 이동한다.. 
+  @PostMapping("/join.do")// value만 들어가면 생략 가능
+  public void join(HttpServletRequest request, HttpServletResponse response) {
+    userService.join(request, response);
+  }
+  @GetMapping("/mypage.form")
+  public String mypageForm() {
+    return "user/mypage";
+  }
+  
+  
+  @PostMapping(value = "/modify.do", produces = MediaType.APPLICATION_JSON_VALUE)
+  public ResponseEntity<Map<String, Object>> modify(HttpServletRequest request){
+    return userService.modify(request);
+  }
+  
+  @GetMapping("/pw.do")
+  public String pwModify() {
+    return "user/pw";
+  }
+  
+  @PostMapping("/leave.do")
+  public void leave(HttpServletRequest request, HttpServletResponse response) {
+    userService.leave(request, response);
+  }
+  
+  
+  
 }

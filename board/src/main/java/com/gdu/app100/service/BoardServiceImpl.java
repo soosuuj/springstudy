@@ -38,6 +38,9 @@ public class BoardServiceImpl implements BoardService {
   public List<BoardDto> getBoardList() {
     return boardMapper.getBoardList();
   }
-  
+  @Override
+  public int modifyBoard(BoardDto boardDto) {
+    return boardMapper.modifyBoard(boardDto);
+  }
 
 }

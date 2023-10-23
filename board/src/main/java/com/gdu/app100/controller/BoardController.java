@@ -2,12 +2,8 @@ package com.gdu.app100.controller;
 
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -69,11 +65,18 @@ public class BoardController {
   // 상세
   @RequestMapping(value="/board/detail.do", method=RequestMethod.GET)
   public String detail(@RequestParam int no, Model model) {
-    BoardDto board = boardService.getBoardDto(no);
-    model.addAttribute("board", board);
+    BoardDto boardDto = boardService.getBoardDto(no);
+    model.addAttribute("boardDto", boardDto);
     return "board/detail";
   }
   
+  // 수정
+  @RequestMapping(value="/board/modify.do", method=RequestMethod.POST)
+  public String modify(BoardDto boardDto, RedirectAttributes redirectAttributes) {
+    int modifyResult = boardService.modifyBoard(boardDto);
+    redirectAttributes.addFlashAttribute("modifyResult", modifyResult);
+    return "redirect:/board/detail.do?no=" + boardDto.getNo();
+  }
   
 
 }
