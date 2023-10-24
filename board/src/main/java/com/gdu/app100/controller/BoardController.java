@@ -46,20 +46,21 @@ public class BoardController {
   }
   
   
-  @RequestMapping(value = "board/delete.do", method = RequestMethod.GET)
-  public String deleteBoard(@RequestParam("no") int no, RedirectAttributes redirectAttributes) {
-      int deleteResult = boardService.deleteBoard(no);
-      redirectAttributes.addFlashAttribute("deleteResult", deleteResult);
-      return "redirect:/board/list.do"; 
-  }
-  
-//  // 삭제
-//  @RequestMapping(value="/board/delete.do", method=RequestMethod.POST)
-//  public String delete(@RequestParam(value="no", required=false, defaultValue="0") int no, RedirectAttributes redirectAttributes) {
-//    int deleteResult = boardService.deleteBoard(no);
-//    redirectAttributes.addFlashAttribute("deleteResult", deleteResult);
-//    return "redirect:/notice/list.do";
+//  @RequestMapping(value = "board/delete.do", method = RequestMethod.GET)
+//  public String deleteBoard(@RequestParam("no") int no, RedirectAttributes redirectAttributes) {
+//      int deleteResult = boardService.deleteBoard(no);
+//      redirectAttributes.addFlashAttribute("deleteResult", deleteResult);
+//      return "redirect:/board/list.do"; 
 //  }
+//  
+  
+  // 삭제
+  @RequestMapping(value="/board/delete.do", method=RequestMethod.POST)
+  public String delete(@RequestParam(value="no", required=false, defaultValue="0") int no, RedirectAttributes redirectAttributes) {
+    int deleteResult = boardService.deleteBoard(no);
+    redirectAttributes.addFlashAttribute("deleteResult", deleteResult);
+    return "redirect:/board/list.do";
+  }
 
   
   // 상세

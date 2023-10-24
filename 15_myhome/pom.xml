@@ -21,6 +21,16 @@
 
   <dependencies>
   
+  
+  
+  
+    <!-- https://mvnrepository.com/artifact/org.json/json -->
+    <dependency>
+        <groupId>org.json</groupId>
+        <artifactId>json</artifactId>
+        <version>20231013</version>
+    </dependency>
+  
     <!-- Random String 생성(이메일 인증 코드 생성) -->
     <!-- https://mvnrepository.com/artifact/org.springframework/spring-context-support -->
     <dependency>

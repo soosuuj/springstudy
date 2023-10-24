@@ -12,12 +12,25 @@
 
 $(function(){
 	fnList();
+	fnDelete();
 })
 
 
 function fnList(){
 	$('#btn_list').click(function(){
 	  location.href = '${contextPath}/board/list.do';
+	})
+  }
+  
+
+  })
+  
+  function fnDelete(){
+	$('#btn_delete').click(function(){
+	  if(confirm('연락처를 삭제할까요?')){
+	    $('#frm_list').attr('action', '${contextPath}/board/delete.do');
+	    $('#frm_list').submit();
+	  }
 	})
   }
   

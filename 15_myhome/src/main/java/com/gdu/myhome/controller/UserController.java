@@ -4,6 +4,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -14,7 +15,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.gdu.myhome.dto.UserDto;
 import com.gdu.myhome.service.UserService;
+import com.gdu.myhome.service.UserServiceImpl;
 
 import lombok.RequiredArgsConstructor;
 
@@ -25,18 +28,34 @@ public class UserController {
   
   private final UserService userService;
   
-  // 로그인 페이지로 이동하는 매핑
   @GetMapping("/login.form")
-  public String loginForm(HttpServletRequest request, Model model) {
-    // 모델을 통해 jsp로 전달 - 이전 주소 를 전달할 거임(직전의 주소)  -> jsp에서는 ${referer}로 확인 할 수 있음
+  public String loginForm(HttpServletRequest request, Model model) throws Exception {
     // referer : 이전 주소가 저장되는 요청 Header 값
     String referer = request.getHeader("referer");
     model.addAttribute("referer", referer == null ? request.getContextPath() + "/main.do" : referer);
+    // 네이버로그인-1
+    model.addAttribute("naverLoginURL", userService.getNaverLoginURL(request));
     return "user/login";
   }
   
+  @GetMapping("/naver/getAccessToken.do")
+  public String getAccessToken(HttpServletRequest request) throws Exception {
+    // 네이버로그인-2
+    String accessToken = userService.getNaverLoginAccessToken(request);
+    return "redirect:/user/naver/getProfile.do?accessToken=" + accessToken;
+  }
+  
+  @GetMapping("/naver/getProfile.do")
+  public  void getProfile(@RequestParam String accessToken) throws Exception {
+    // 네이버 로그인 -3
+    UserDto user = userService.getNaverProfile(accessToken);
+    System.out.println(user);
+    
+  }
+  
+
   @PostMapping("/login.do")
-  public void login(HttpServletRequest request, HttpServletResponse response) {
+  public void login(HttpServletRequest request, HttpServletResponse response) throws Exception {
     userService.login(request, response);
   }
   
@@ -64,43 +83,59 @@ public class UserController {
     return rtn;
   }
   
-  
-  @GetMapping(value = "/checkEmail.do", produces = MediaType.APPLICATION_JSON_VALUE)
-  public ResponseEntity<Map<String, Object>> checkedEmail(@RequestParam String email){
+  @GetMapping(value="/checkEmail.do", produces=MediaType.APPLICATION_JSON_VALUE)
+  public ResponseEntity<Map<String, Object>> checkEmail(@RequestParam String email) {
     return userService.checkEmail(email);
   }
   
-  @GetMapping(value = "/sendCode.do", produces = MediaType.APPLICATION_JSON_VALUE)
+  @GetMapping(value="/sendCode.do", produces=MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<Map<String, Object>> sendCode(@RequestParam String email) {
     return userService.sendCode(email);
   }
   
-  
-  // 반환 void 서비비스가 직접 이동한다.. 
-  @PostMapping("/join.do")// value만 들어가면 생략 가능
+  @PostMapping("/join.do")
   public void join(HttpServletRequest request, HttpServletResponse response) {
     userService.join(request, response);
   }
+  
   @GetMapping("/mypage.form")
   public String mypageForm() {
     return "user/mypage";
   }
   
-  
-  @PostMapping(value = "/modify.do", produces = MediaType.APPLICATION_JSON_VALUE)
-  public ResponseEntity<Map<String, Object>> modify(HttpServletRequest request){
+  @PostMapping(value="/modify.do", produces=MediaType.APPLICATION_JSON_VALUE)
+  public ResponseEntity<Map<String, Object>> modify(HttpServletRequest request) {
     return userService.modify(request);
   }
   
-  @GetMapping("/pw.do")
-  public String pwModify() {
+  @GetMapping("/modifyPw.form")
+  public String modifyPwForm() {
     return "user/pw";
+  }
+  
+  @PostMapping("/modifyPw.do")
+  public void modifyPw(HttpServletRequest request, HttpServletResponse response) {
+    userService.modifyPw(request, response);
   }
   
   @PostMapping("/leave.do")
   public void leave(HttpServletRequest request, HttpServletResponse response) {
     userService.leave(request, response);
   }
+  
+  @GetMapping("/active.form")
+  public String activeForm() {
+    return "user/active";
+  }
+  
+  @GetMapping("/active.do")
+  public void active(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
+    userService.active(session, request, response);
+  }
+  
+  
+  
+  
   
   
   

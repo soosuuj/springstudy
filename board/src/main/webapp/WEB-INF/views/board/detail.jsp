@@ -9,12 +9,22 @@
 <title>Insert title here</title>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 <script>
-$(function(){    
-	fnRemove();
+$(function(){   
+	fnDeleteContact();
+	//fnRemove();
 	fnList();
 	
 
   })
+  
+    function fnDeleteContact(){
+	$('#btn_delete').click(function(){
+	  if(confirm('연락처를 삭제할까요?')){
+	    $('#frm_detail').attr('action', '${contextPath}/board/delete.do');
+	    $('#frm_detail').submit();
+	  }
+	})
+  }
   
 function fnRemove(){
 	$('#btn_delete').click(function(){		

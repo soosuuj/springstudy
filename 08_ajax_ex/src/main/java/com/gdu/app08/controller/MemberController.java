@@ -1,4 +1,4 @@
-package com.gdu.app08.config;
+package com.gdu.app08.controller;
 
 import java.util.Map;
 

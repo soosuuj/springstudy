@@ -1,47 +1,100 @@
 /**
- * 가입 이전 단계 : 약관 동의 페이지
+ * 마이페이지
  */
 
+/* 함수 호출 */
 $(() => {
-  fnChkAll();
-  fnChkEach();
-  fnJoinForm();
+  fnCheckName();
+  fnCheckMobile();
+  fnModifyUser();
+  fnModifyPasswordForm();
+  fnLeaveUser();
 })
 
-// 전체 선택을 클릭하면 개별 선택에 영향을 미친다.
-const fnChkAll = () => {
-  $('#chk_all').click((ev) => {
-    $('.chk_each').prop('checked', $(ev.target).prop('checked'));
+
+/* 전역변수 선언 */
+var namePassed = false;
+var mobilePassed = false;
+
+
+/* 함수 정의 */
+
+const getContextPath = () => {
+  let begin = location.href.indexOf(location.host) + location.host.length;
+  let end = location.href.indexOf('/', begin + 1);
+  return location.href.substring(begin, end);
+}
+
+const fnCheckName = () => {
+  $('#name').blur((ev) => {
+    let name = ev.target.value;
+    let bytes = 0;
+    for(let i = 0; i < name.length; i++){
+      if(name.charCodeAt(i) > 128){  // 코드값이 128을 초과하는 문자는 한 글자 당 2바이트임
+        bytes += 2;
+      } else {
+        bytes++;
+      }
+    }
+    namePassed = (bytes <= 50);
+    if(!namePassed){
+      $('#msg_name').text('이름은 50바이트 이내로 작성해야 합니다.');
+    }
   })
 }
 
-// 개별 선택을 클릭하면 전체 선택에 영향을 미친다.
-const fnChkEach = () => {
-  $(document).on('click', '.chk_each', () => {
-    var total = 0;
-    $.each($('.chk_each'), (i, elem) => {
-      total += $(elem).prop('checked');
-    })
-    $('#chk_all').prop('checked', total === $('.chk_each').length);
+const fnCheckMobile = () => {
+  $('#mobile').keyup((ev) => {
+    ev.target.value = ev.target.value.replaceAll('-', '');
+    // 휴대전화번호 검사 정규식 (010숫자8개)
+    let regMobile = /^010[0-9]{8}$/;
+    mobilePassed = regMobile.test(ev.target.value);
+    if(mobilePassed){
+      $('#msg_mobile').text('');
+    } else {
+      $('#msg_mobile').text('휴대전화번호를 확인하세요.');       
+    }
   })
 }
 
-// 필수 동의를 해야만 가입 페이지로 이동할 수 있다.
-const fnJoinForm = () => {
-  $('#frm_agree').submit((ev) => {
-    if(!$('#service').is(':checked')){
-      alert('필수 약관에 동의하세요.');
-      ev.preventDefault();
+const fnModifyUser = () => {
+  $('#btn_modify').click(() => {
+    if(!namePassed){
+      alert('이름을 확인하세요.');
+      return;
+    } else if(!mobilePassed){
+      alert('휴대전화번호를 확인하세요.');
       return;
     }
+    $.ajax({
+      // 요청
+      type: 'post',
+      url: getContextPath() + '/user/modify.do',
+      data: $('#frm_mypage').serialize(),
+      // 응답
+      dataType: 'json',
+      success: (resData) => {  // {"modifyResult": 1}
+        if(resData.modifyResult === 1){
+          alert('회원 정보가 수정되었습니다.');
+        } else {
+          alert('회원 정보가 수정되지 않았습니다.');
+        }
+      }
+    })
   })
 }
 
+const fnModifyPasswordForm = () => {
+  $('#btn_modify_pw').click(() => {
+    location.href = getContextPath() + '/user/modifyPw.form';
+  })
+}
 
 const fnLeaveUser = () => {
- if(confirm('회원 탈퇴하시겠습니까?')){
- 	$('#frm_mypage').prop('action', getContextPath() + '/user/leave.do')
-	$('#frm_mypage').submit();
+  $('#btn_leave').click(() => {
+    if(confirm('회원 탈퇴하시겠습니까?')){
+      $('#frm_mypage').prop('action', getContextPath() + '/user/leave.do');
+      $('#frm_mypage').submit();
     }
   })
- }
+}
