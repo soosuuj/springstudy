@@ -17,10 +17,16 @@ public interface UserService {
   
   public String getNaverLoginURL(HttpServletRequest request) throws Exception;
   
-  // tnwjd
   public String getNaverLoginAccessToken(HttpServletRequest request) throws Exception;
   
   public UserDto getNaverProfile(String accessToken) throws Exception;
+//이메일을 가진 유저 반환
+  public UserDto getUser(String email); 
+    
+  public void naverJoin(HttpServletRequest request, HttpServletResponse response);
+  
+  public void naverLogin(HttpServletRequest request, HttpServletResponse response, UserDto naverProfile) throws Exception;
+
   
   public void logout(HttpServletRequest request, HttpServletResponse response);
   // 제이슨 반환 - map, responsEntity
