@@ -27,12 +27,12 @@ public class FreeController {
   
   @PostMapping("/add.do")
   public String add(HttpServletRequest request, RedirectAttributes redirectAttributes) {
-    int addresult = freeService.addFree(request);
-    redirectAttributes.addFlashAttribute("addresult", addresult);
-    return "redirect:/free/list";
+    int addResult = freeService.addFree(request);
+    redirectAttributes.addFlashAttribute("addResult", addResult);
+    return "redirect:/free/list.do";
   }
   
-  @GetMapping("/list.do")  // 목록을 모델에 저장해서 넘김
+  @GetMapping("/list.do") // 목록을 모델에 저장해서 넘김
   public String list(HttpServletRequest request, Model model) {
     // 서비스 구현 후 채우기
     freeService.loadFreeList(request, model);

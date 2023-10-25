@@ -35,7 +35,7 @@ public class FreeServiceImpl implements FreeService {
     
     FreeDto free = FreeDto.builder()
                      .email(email)
-                     .content(contents)
+                     .contents(contents)
                      .build();
       
     return freeMapper.insertFree(free);// 결과 0, 1 반환하는 방식

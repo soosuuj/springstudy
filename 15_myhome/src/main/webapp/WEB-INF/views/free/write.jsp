@@ -12,30 +12,26 @@
 
 <div>
 
-<form id="frm_free_add" method="post" action="${contextPath}/free/add.do">
+  <form id="frm_free_add" method="post" action="${contextPath}/free/add.do">
     
     <h1>자유게시글을 작성하세요</h1>
     
-
-      <div>
-        <label for="email">작성자</label>
-        <input type="text" name="email" id="email" value="${sessionScope.user.email}" readonly>
-      </div>
-
+    <div>
+      <label for="email">작성자</label>
+      <input type="text" name="email" id="email" value="${sessionScope.user.email}" readonly>
+    </div>
     
     <div>
       <label for="contents">내용</label>
-      <textarea name="contents" id="contents" ></textarea>
+      <textarea name="contents" id="contents"></textarea>
     </div>
     
- 
     <div>
       <button type="submit">작성완료</button>
     </div>
     
   </form>
- 
- </div>
 
+</div>
 
 <%@ include file="../layout/footer.jsp" %>

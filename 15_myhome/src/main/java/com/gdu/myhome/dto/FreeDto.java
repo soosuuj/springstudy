@@ -15,7 +15,7 @@ public class FreeDto {
   
   private int freeNo;
   private String email;
-  private String content;
+  private String contents;
   private Timestamp createdAt;
   private int status;
   private int depth;
