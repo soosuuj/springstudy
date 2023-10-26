@@ -14,8 +14,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.gdu.myhome.dto.UserDto;
+import com.gdu.myhome.service.FreeService;
 import com.gdu.myhome.service.UserService;
 import com.gdu.myhome.service.UserServiceImpl;
 
@@ -27,6 +29,7 @@ import lombok.RequiredArgsConstructor;
 public class UserController {
   
   private final UserService userService;
+  private final FreeService freeService;
   
   @GetMapping("/login.form")
   public String loginForm(HttpServletRequest request, Model model) throws Exception {
@@ -147,7 +150,7 @@ public class UserController {
     userService.active(session, request, response);
   }
   
-  
+
   
   
   
