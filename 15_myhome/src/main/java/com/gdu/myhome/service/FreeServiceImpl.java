@@ -12,7 +12,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 
 import com.gdu.myhome.dao.FreeMapper;
-import com.gdu.myhome.dao.UserMapper;
 import com.gdu.myhome.dto.FreeDto;
 import com.gdu.myhome.util.MyPageUtils;
 import com.gdu.myhome.util.MySecurityUtils;
@@ -114,12 +113,14 @@ public class FreeServiceImpl implements FreeService {
     return freeMapper.deleteFree(freeNo);
   }
   
+  @Transactional(readOnly = true)
   @Override
   public void loadSearchList(HttpServletRequest request, Model model) {
     
     // 칼럼하고 쿼리 보내진거 받기
     String column = request.getParameter("column");
     String query = request.getParameter("query");
+    
     
     // 검색 결과 개수 구하기 - Mapper작업 필요! 
     Map<String, Object> map = new HashMap<>();
@@ -147,7 +148,7 @@ public class FreeServiceImpl implements FreeService {
     List<FreeDto> freeList = freeMapper.getSearchList(map);
     
     model.addAttribute("freeList", freeList);
-    model.addAttribute("paging", myPageUtils.getMvcPaging(request.getContextPath()+ "/free/list.do"));
+    model.addAttribute("paging", myPageUtils.getMvcPaging(request.getContextPath()+ "/free/search.do", "column=" + column + "&query=" + query));
     model.addAttribute("beginNo", total - (page - 1) * display);
     
     

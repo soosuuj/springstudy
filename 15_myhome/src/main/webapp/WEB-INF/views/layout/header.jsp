@@ -38,10 +38,10 @@
        <div><a href="${contextPath}/user/logout.do">로그아웃</a></div>
       </c:if>
     </div>
-    <div class="gnb_wrap">
-      <ul class="gnb">
+    <div class="gnb_wrap" >
+      <ul class="gnb " >
         <li><a href="${contextPath}/free/list.do">계층게시판</a></li>
-        <li><a href="${contextPath}">댓글형게시판</a></li>
+        <li><a href="${contextPath}/blog/list.do">댓글형게시판</a></li>
         <li><a href="${contextPath}">첨부게시판</a></li>
         <li><a href="${contextPath}/user/mypage.form">마이페이지</a></li>
       </ul>
