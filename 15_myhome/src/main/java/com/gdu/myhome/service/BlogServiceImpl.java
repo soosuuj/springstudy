@@ -1,7 +1,11 @@
 package com.gdu.myhome.service;
 
 import java.io.File;
+import java.nio.file.Path;
+import java.util.List;
 import java.util.Map;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -10,22 +14,29 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.ui.Model;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.gdu.myhome.dao.BlogMapper;
 import com.gdu.myhome.dto.BlogDto;
 import com.gdu.myhome.dto.BlogImageDto;
+import com.gdu.myhome.dto.CommentDto;
+import com.gdu.myhome.dto.UserDto;
 import com.gdu.myhome.util.MyFileUtils;
+import com.gdu.myhome.util.MyPageUtils;
 
 import lombok.RequiredArgsConstructor;
 
+@Transactional
 @RequiredArgsConstructor
 @Service
 public class BlogServiceImpl implements BlogService {
 
   private final BlogMapper blogMapper;
   private final MyFileUtils myFileUtils;
+  private final MyPageUtils myPageUtils;
   
   @Override
   public Map<String, Object> imageUpload(MultipartHttpServletRequest multipartRequest) {
@@ -77,7 +88,10 @@ public class BlogServiceImpl implements BlogService {
     BlogDto blog = BlogDto.builder()
                     .title(title)
                     .contents(contents)
-                    .userNo(userNo)
+                    .userDto(UserDto.builder()
+                               .userNo(userNo)
+                               .build())
+                    //.userNo(userNo)
                     .ip(ip)
                     .build();
     
@@ -104,6 +118,85 @@ public class BlogServiceImpl implements BlogService {
     }
     
     return addResult;
+    
+  }
+  
+  public void blogImageBatch() {
+    
+    // 1. 어제 작성된 블로그의 이미지 목록 (DB)
+    List<BlogImageDto> blogImageList = blogMapper.getBlogImageInYesterday();
+    
+    // 2. List<BlogImageDto> -> List<Path> (Path는 경로+파일명으로 구성)
+    List<Path> blogImagePathList = blogImageList.stream()
+                                                .map(blogImageDto -> new File(blogImageDto.getImagePath(), blogImageDto.getFilesystemName()).toPath())
+                                                .collect(Collectors.toList());
+    
+    // 3. 어제 저장된 블로그 이미지 목록 (디렉토리)
+    File dir = new File(myFileUtils.getBlogImagePathInYesterday());
+    
+    // 4. 삭제할 File 객체들
+    File[] targets = dir.listFiles(file -> !blogImagePathList.contains(file.toPath()));
+
+    // 5. 삭제
+    if(targets != null && targets.length != 0) {
+      for(File target : targets) {
+        target.delete();
+      }
+    }
+    
+  }
+  
+  @Transactional(readOnly=true)
+  @Override
+  public void loadBlogList(HttpServletRequest request, Model model) {
+     
+    Optional<String> opt = Optional.ofNullable(request.getParameter("page"));
+    int page = Integer.parseInt(opt.orElse("1"));
+    int total = blogMapper.getBlogCount(); // 수정된 부분
+    int display = 10;
+
+    myPageUtils.setPaging(page, total, display);
+    
+    Map<String, Object> map = Map.of("begin", myPageUtils.getBegin()
+                                    , "end", myPageUtils.getEnd());
+    
+    List<BlogDto> blogList  = blogMapper.getBlogList(map);
+    
+    model.addAttribute("blogList", blogList);
+    model.addAttribute("paging", myPageUtils.getMvcPaging(request.getContextPath() + "/blog/list.do"));
+    model.addAttribute("beginNo", total -(page -1) * display);
+    
+  }
+  
+  @Override
+  public int increseHit(int blogNo) {
+    return blogMapper.updateHit(blogNo);
+  }
+  
+  @Override
+  public BlogDto getBlog(int blogNo) {
+    return blogMapper.getBlog(blogNo);
+  }
+  
+  @Override
+  public Map<String, Object> addComment(HttpServletRequest request) {
+
+    String contents = request.getParameter("contents");
+    int userNo = Integer.parseInt(request.getParameter("userNo"));
+    int blogNo = Integer.parseInt(request.getParameter("blogNo"));
+    
+    CommentDto comment = CommentDto.builder()
+                            .contents(contents)
+                            .userNo(userNo)
+                            .blogNo(blogNo)
+                            .build();
+    
+    int addCommentResult = blogMapper.insertComment(comment);
+    
+    return Map.of("addCommentResult", addCommentResult);
+    
+    
+    
     
   }
   
