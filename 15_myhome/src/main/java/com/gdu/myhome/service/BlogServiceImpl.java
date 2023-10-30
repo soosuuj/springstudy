@@ -186,17 +186,14 @@ public class BlogServiceImpl implements BlogService {
     int blogNo = Integer.parseInt(request.getParameter("blogNo"));
     
     CommentDto comment = CommentDto.builder()
-                            .contents(contents)
-                            .userNo(userNo)
-                            .blogNo(blogNo)
-                            .build();
+                          .contents(contents)
+                          .userNo(userNo)
+                          .blogNo(blogNo)
+                          .build();
     
     int addCommentResult = blogMapper.insertComment(comment);
     
     return Map.of("addCommentResult", addCommentResult);
-    
-    
-    
     
   }
   

@@ -28,7 +28,7 @@
   
   <hr>
   
-  <!-- 댓글 작성 화면/ 테이블 블로그 댓글 -->
+  <!-- 댓글 작성 화면 -->
   <div>
     <form id="frm_comment_add">
       <textarea rows="3" cols="50" name="contents" id="contents" placeholder="댓글을 작성해 주세요"></textarea>
@@ -37,59 +37,49 @@
       <button type="button" id="btn_comment_add">작성완료</button>
     </form>
     <script>
-    const fnRequiredLogin = () => {
+    
+      const fnRequiredLogin = () => {    	  
         // 로그인을 안하고 작성을 시도하면 로그인 페이지로 보내기
         $('#contents, #btn_comment_add').click(() => {
-            if('${sessionScope.user}' === '') {
-                if (confirm('로그인이 필요한 기능입니다. 로그인 할까요??')) {
-                    location.href = '${contextPath}/user/login.form';
-                } else {
-                    return;
-                }
-            }
-        });
-    }
-
-    
-    const fnCommnetAdd = () => {
-    	$('#btn_comment_add').click(() => {
-    		$.ajax({
-    			type:'post',
-    			url: '${contextPath}/blog/addComment.do',
-    			data: $('#frm_comment_add').serialize(), 
-    			// 응답
-    			dataType: 'json',
-    			success: (resData) => {
-    				console.log(resData);
-    			}
-    			
-    		})
-    	})
-    }
-    
-    
-    fnCommnetAdd();
-    fnRequeredLogin();
-    
+      	  if('${sessionScope.user}' === ''){
+      		  if(confirm('로그인이 필요한 기능입니다. 로그인할까요?')){
+      			  location.href = '${contextPath}/user/login.form';
+      		  } else {
+      			  return;
+      		  }
+      	  }
+        })
+      }
+      
+      const fnCommentAdd = () => {
+    	  $('#btn_comment_add').click(() => {
+    		  $.ajax({
+    			  // 요청
+    			  type: 'post',
+    			  url: '${contextPath}/blog/addComment.do',
+    			  data: $('#frm_comment_add').serialize(),
+    			  // 응답
+    			  dataType: 'json',
+    			  success: (resData) => {
+    				  console.log(resData);
+    			  }
+    		  })
+    	  })
+      }
+      
+      fnRequiredLogin();
+      fnCommentAdd();
+      
     </script>
-
-    
   </div>
   
   <!-- 블로그 댓글 목록 -->
-  <div id="comment_list">
+  <div id="comment_list"></div>
   <script>
-  	
-  </script>
   
-  </div>
+  </script>
+
 
 </div>
-
-<script>
-
-
-
-</script>
 
 <%@ include file="../layout/footer.jsp" %>

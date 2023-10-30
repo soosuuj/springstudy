@@ -159,8 +159,8 @@ COMMIT;
 
 -- 블로그 쿼리 테스트
 
--- 1. 목록 (사용자 테이블과 블로그 테이블의 조인)
---부모 : 일대다 관계에서 일(PK, UNIQUE) - 사용자
+-- 1. 블로그 목록 (사용자 테이블과 블로그 테이블의 조인)
+-- 부모 : 일대다 관계에서 일(PK, UNIQUE) - 사용자
 -- 자식 : 일대다 관계에서 다(FK)        - 블로그 
 -- 내부 조인 : 사용자와 블로그에 모두 존재하는 데이터를 조인하는 방식
 -- 외부 조인 : 사용자가 없는 블로그도 모두 조인하는 방식(불가능)
@@ -186,8 +186,16 @@ SELECT B.BLOG_NO, B.TITLE, B.CONTENTS, B.HIT, B.IP, B.CREATED_AT, B.MODIFIED_AT,
    AND B.BLOG_NO = 1;
 
  
- --3) 댓글 목록
-
+ --3) 댓글 목록 가져오기
+ -- 블로그 테이블 - 댓글 테이블 :1:N (댓글이 달린 블로그 정보는 이미 상세보기에 모두 표시되어 있으므로 여기에선 조인할 필요가 없음)
+    --//(하나의 블로그에 여러개의 댓글 달 수 있다.)
+ -- 사용자 - 댓글 : 1:N   (댓글의 사용자 이름을 표시)// 1:N 관계가 2개가 있음...
+SELECT A.COMMENT_NO, A.CONTENTS, A.BLOG_NO, A.CREATED_AT, A.STATUS, A.DEPTH, A.GROUP_NO, A.USER_NO, A.NAME
+  FROM (SELECT ROW_NUMBER() OVER(ORDER BY GROUP_NO DESC, DEPTH ASC, COMMENT_NO DESC) AS RN, C.COMMENT_NO, C.CONTENTS, C.BLOG_NO, C.CREATED_AT, C.STATUS, C.DEPTH, C.GROUP_NO, U.USER_NO, U.NAME
+          FROM USER_T U INNER JOIN COMMENT_T C
+            ON U.USER_NO = C.USER_NO
+         WHERE C.BLOG_NO = 5) A
+ WHERE A.RN BETWEEN 1 AND 10;
 
 
 
