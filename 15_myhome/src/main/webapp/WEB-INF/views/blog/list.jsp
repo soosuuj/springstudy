@@ -67,4 +67,4 @@
 
 </script>
 
-<%@ include file="../layout/footer.jsp" %>sujin
+<%@ include file="../layout/footer.jsp" %>

@@ -2,6 +2,7 @@ package com.gdu.myhome.service;
 
 import java.io.File;
 import java.nio.file.Path;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -179,6 +180,30 @@ public class BlogServiceImpl implements BlogService {
   }
   
   @Override
+  public int modifyBlog(HttpServletRequest request) {
+
+    String title = request.getParameter("title");
+    String contents = request.getParameter("contents");
+    int blogNo = Integer.parseInt(request.getParameter("blogNo"));
+    
+    BlogDto blog = BlogDto.builder()
+                         .title(title)
+                         .contents(contents)
+                         .blogNo(blogNo)
+                         .build();
+    
+    int modifyResult = blogMapper.updateBlog(blog);
+    
+    return modifyResult;
+  }
+  
+  @Override
+  public int removeBlog(int blogNo) {
+    return blogMapper.deleteBlog(blogNo);
+  }
+  
+  
+  @Override
   public Map<String, Object> addComment(HttpServletRequest request) {
 
     String contents = request.getParameter("contents");
@@ -187,7 +212,9 @@ public class BlogServiceImpl implements BlogService {
     
     CommentDto comment = CommentDto.builder()
                           .contents(contents)
-                          .userNo(userNo)
+                          .userDto(UserDto.builder()
+                                      .userNo(userNo)
+                                      .build())  
                           .blogNo(blogNo)
                           .build();
     
@@ -196,5 +223,64 @@ public class BlogServiceImpl implements BlogService {
     return Map.of("addCommentResult", addCommentResult);
     
   }
+  
+  @Override
+  public Map<String, Object> loadCommentList(HttpServletRequest request) {
+    // 페이지 번호 넘오오게 되어있음
+    int blogNo = Integer.parseInt(request.getParameter("blogNo"));
+
+    int page = Integer.parseInt(request.getParameter("page"));
+    int total = blogMapper.getCommentCount(blogNo);
+    int display = 10;
+    
+    myPageUtils.setPaging(page, total, display);
+    
+    // 맵 비긴, 앤드 
+    Map<String, Object> map = Map.of("blogNo", blogNo
+                                    , "begin", myPageUtils.getBegin()
+                                    , "end", myPageUtils.getEnd());
+    
+    List<CommentDto> commentList = blogMapper.getCommentList(map);
+    
+    String paging = myPageUtils.getAjaxPaging();
+    
+    Map<String, Object> result = new HashMap<String, Object>();
+    result.put("commentList", commentList);
+    result.put("paging", paging);
+    
+    return result;
+  }
+  
+  
+  @Override
+  public Map<String, Object> addCommentReply(HttpServletRequest request) {
+    String contents = request.getParameter("contents");
+    int userNo = Integer.parseInt(request.getParameter("userNo"));
+    int blogNo = Integer.parseInt(request.getParameter("blogNo"));
+    int groupNo = Integer.parseInt(request.getParameter("groupNo"));
+    
+    CommentDto comment = CommentDto.builder()
+                          .contents(contents)
+                          .userDto(UserDto.builder()
+                                      .userNo(userNo)
+                                      .build())  
+                          .blogNo(blogNo)
+                          .groupNo(groupNo)
+                          .build();
+    
+    int addCommentReplyResult = blogMapper.insertCommentReply(comment);
+    
+    return Map.of("addCommentReplyResult", addCommentReplyResult);
+    
+  }
+  
+  @Override
+    public Map<String, Object> removeComment(int commentNo) {
+      int removeResult = blogMapper.deleteComment(commentNo);
+    return Map.of("removeResult", removeResult);
+    }
+  
+  
+  
   
 }
