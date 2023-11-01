@@ -8,6 +8,7 @@ import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 @Configuration
 public class FileConfig {
   
+  // 스프링이 가져다 쓸 수 있게 bean 만들어 둠
   // 인터페이스 기준으로 타입찾기 
     @Bean
     public MultipartResolver multipartResolver() {

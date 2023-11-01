@@ -11,14 +11,6 @@
 </jsp:include>
 
 <style>
-  .btn.btn-primary {
-    margin-top: 10px;
-  }
-
-  .aaa {
-  margin-bottom: 10px;
-  }
-
   .ck.ck-editor {
     max-width: 1000px;
   }
@@ -28,9 +20,13 @@
   .ck-content {
     color: gray;
   }
+  .writer_btn {
+    margin: 10px auto;
+    
+  }
 </style>
 
-<div class="aaa">
+<div>
 
   <form id="frm_blog_add" method="post" action="${contextPath}/blog/addBlog.do">
     
@@ -43,57 +39,48 @@
     
     <div>
       <label for="contents">내용</label>
-      <textarea name="contents" id="contents"></textarea>
+      <textarea name="contents" id="contents" style="display: none;"></textarea>
+      <div id="toolbar-container"></div>
+      <div id="ckeditor"></div>
     </div>
     
-    <div class="d-grid gap-2 col-6 mx-auto">
+    <div class="writer_btn">
       <input type="hidden" name="userNo" value="${sessionScope.user.userNo}">
-      <button type="submit" class="btn btn-primary" >작성완료</button>
+      <button class="btn btn-primary col-12" type="submit">작성완료</button>
     </div>
     
   </form>
-  
-  <script>
 
-  const fnCkeditor = () => { 
-	  ClassicEditor
-	    .create(document.getElementById('contents'), {
-		    toolbar: {
-			    items: [
-		        'undo', 'redo',
-		        '|', 'heading',
-		        '|', 'fontfamily', 'fontsize', 'fontColor', 'fontBackgroundColor',
-		        '|', 'bold', 'italic', 'strikethrough', 'subscript', 'superscript', 'code',
-		        '|', 'link', 'uploadImage', 'blockQuote', 'codeBlock',
-		        '|', 'bulletedList', 'numberedList', 'todoList', 'outdent', 'indent'
-  		    ],
-  		    shouldNotGroupWhenFull: false
-  	   },
-       heading: {
-         options: [
-           { model: 'paragraph', title: 'Paragraph', class: 'ck-heading_paragraph' },
-           { model: 'heading1', view: 'h1', title: 'Heading 1', class: 'ck-heading_heading1' },
-           { model: 'heading2', view: 'h2', title: 'Heading 2', class: 'ck-heading_heading2' },
-           { model: 'heading3', view: 'h3', title: 'Heading 3', class: 'ck-heading_heading3' },
-           { model: 'heading4', view: 'h4', title: 'Heading 4', class: 'ck-heading_heading4' },
-           { model: 'heading5', view: 'h5', title: 'Heading 5', class: 'ck-heading_heading5' },
-           { model: 'heading6', view: 'h6', title: 'Heading 6', class: 'ck-heading_heading6' }
-         ]
-       },
-       ckfinder: {
-    	   // 업로드 경로 - 첨부된 이미지가 전달되는 경로
-    	   uploadUrl: '${contextPath}/blog/imageUpload.do'
-       }
-	   })
-	   .catch(err => {
-		   console.log(err)
-	   });
+</div>
+
+<script>
+
+  const fnCkeditor = () => {
+	  DecoupledEditor
+      .create(document.getElementById('ckeditor'), {
+    	  ckfinder: {
+          // 이미지 업로드 경로
+          uploadUrl: '${contextPath}/blog/imageUpload.do'    		  
+    		}
+  	  })
+      .then(editor => {
+        const toolbarContainer = document.getElementById('toolbar-container');
+        toolbarContainer.appendChild(editor.ui.view.toolbar.element);
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  }
+  
+  const fnBlogAdd = () => {
+	  $('#frm_blog_add').submit(() => {
+		  $('#contents').val($('#ckeditor').html());
+	  })
   }
   
   fnCkeditor();
+  fnBlogAdd();
   
-  </script>
-
-</div>
+</script>
 
 <%@ include file="../layout/footer.jsp" %>
