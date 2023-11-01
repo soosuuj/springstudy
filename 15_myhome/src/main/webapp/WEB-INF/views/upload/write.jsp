@@ -10,31 +10,39 @@
   <jsp:param value="업로드게시글작성" name="title"/>
 </jsp:include>
 
+<style>
+.btn-primary {
+  margin: 10px;
+}
+}
+
+</style>
+
 <div>
 
   <h1>Upload 게시글 작성하기</h1>
   
-  <form method="post" action="${contextPath}/upload/add.do" enctype="multipart/form-data">
+  <form method="post" action="${contextPath}/upload/add.do" enctype="multipart/form-data"  class="form-label">
     <div>
-      <label for="email">작성자</label>
-      <input type="text" id="email" value="${sessionScope.user.email}" readonly>
+      <label for="email" >작성자</label>
+      <input type="text" id="email"  value="${sessionScope.user.email}" readonly >
     </div>
     <div>
-      <label for="title">제목</label>
-      <input type="text" name="title" id="title">
+      <label for="title"  >제목</label>
+      <input type="text"  class="form-control" name="title" id="title">
     </div>
     <div>
-      <label for="contents">내용</label>
-      <textarea rows="3" cols="50" name="contents" id="contents"></textarea>
+      <label for="contents"  >내용</label>
+      <textarea rows="3" cols="50" name="contents" id="contents"  class="form-control"></textarea>
     </div>
     <div>
       <!-- multiple이 있어야 다중 첨부 가능! -->
-      <label for="files">첨부</label>
-      <input type="file" name="files" id="files" multiple>
+      <label for="files"  >첨부</label>
+      <input type="file" name="files" id="files" multiple  class="form-control">
     </div>
     <div>
-      <input type="hidden" name="userNo" value="${sessionScope.user.userNo}">
-      <button type="submit">작성완료</button>
+      <input type="hidden" name="userNo" value="${sessionScope.user.userNo}" >
+      <button type="submit" class="btn btn-primary">작성완료</button>
     </div>
   </form>
   <!-- 첨부파일 목록을 보여줌 -->
@@ -50,7 +58,7 @@
       let maxSize = 1024 * 1024 * 100;
       let maxSizePerFile = 1024 * 1024 * 10;
       let totalSize = 0;
-      let files = this.files;
+      let files = ev.target.files;
       for(let i = 0; i < files.length; i++){
         totalSize += files[i].size;
         if(files[i].size > maxSizePerFile){

@@ -15,17 +15,23 @@ public class MyFileUtils {
     return "/blog/" + DateTimeFormatter.ofPattern("yyyy/MM/dd").format(today);
   }
   
+  // 업로드 게시판 작성시 첨부한 파일이 저장될 경로 반환하기
+  public String getUploadPath() {   
+    LocalDate today = LocalDate.now();  // 오늘
+    return "/upload/" + DateTimeFormatter.ofPattern("yyyy/MM/dd").format(today);
+  }
+  
   // 파일이 저장될 이름 반환하기 
-  public String getFilesystemName(String originalFileName) {
+  public String getFilesystemName(String originalFilename) {
     
    
     /* UUID.확장자 (랜덤값) */
     
     String extName = null;
-    if(originalFileName.endsWith("tar.gz")) {  // 확장자의 마침표가 포함되는 예외 경우를 처리한다. gz는 리눅스 압축파일 확장자 - 구글링 하면 더나옴 else if 로 연결
+    if(originalFilename.endsWith("tar.gz")) {  // 확장자의 마침표가 포함되는 예외 경우를 처리한다. gz는 리눅스 압축파일 확장자 - 구글링 하면 더나옴 else if 로 연결
       extName = "tar.gz";
     } else {                                      // [.] 또는 \. (자바에서는 \\. ) 마침표 하나 덜렁 쓰면 안됨
-      String[] arr = originalFileName.split("\\.");   // regex 정규식 마침표는 모든 문자라는 메타문자 성격, 우리는 진짜 마침표라고 지정해줘야함
+      String[] arr = originalFilename.split("\\.");   // regex 정규식 마침표는 모든 문자라는 메타문자 성격, 우리는 진짜 마침표라고 지정해줘야함
       extName = arr[arr.length - 1];              // 배열 시작은 0, 마지막은 길이-1
     }
 
@@ -40,6 +46,11 @@ public class MyFileUtils {
     return "/blog/" + DateTimeFormatter.ofPattern("yyyy/MM/dd").format(date);
 
   }
-   
+  
+  
+  
+  
+  
+  
   
 }
