@@ -16,6 +16,7 @@ public class UploadDto {
   private String contents;
   private String createdAt;
   private String modifiedAt;
+  private int attachCount; // UPLOAD_T에 없는 칼럼이지만, 목록 보기에서 첨부 파일 개수를 반환하므로 그 결과를 저장하기 위해서 추가함
   private UserDto userDto; // private int userNo;
 
 

@@ -3,6 +3,10 @@ package com.gdu.myhome.service;
 import java.io.File;
 import java.nio.file.Files;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -117,6 +121,26 @@ public class UploadServiceImpl implements UploadService {
   // 첨부가 한개일 떄 위에가 0으로 시작, 실제로 첨부하면서 1이 됨... 
   // 파일의 사이즈 카운드 1???  
   // 2개부터는 개수가 맞아서 고려할 필요 없음... 
+  
+  @Override
+  public Map<String, Object> getUploadList(HttpServletRequest request) {
+    //페에지 번호 안올 것을 대비 
+    Optional<String> opt = Optional.ofNullable(request.getParameter("page"));
+    int page = Integer.parseInt(opt.orElse("1"));
+    int total = uploadMapper.getUploadCount();
+    int display = 9; // 3 * 3
+    
+    myPageUtils.setPaging(page, total, display);
+    
+    Map<String, Object> map = Map.of("begin", myPageUtils.getBegin()
+                                    , "end", myPageUtils.getEnd());
+    
+    List<UploadDto> uploadList = uploadMapper.getUploadList(map);
+    
+    // 나중에 확장하고 싶으면 map에 추가해서 실어서 등록하여 확장 할 수 있따...
+    return Map.of("uploadList", uploadList
+                , "totalPage", myPageUtils.getTotalPage());
+  }
   
   
 
