@@ -3,7 +3,11 @@ package com.gdu.myhome.service;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.core.io.Resource;
+import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 public interface UploadService {
@@ -17,5 +21,9 @@ public interface UploadService {
   // 확장을 생각해서 HttpServletRequest 를 많이 쓰게 됨...이렇게 정형화 되는거임
   public Map<String, Object> getUploadList(HttpServletRequest request);  // int page만 쓸거같긴함.. 
   
+ public void loadUpload(HttpServletRequest request, Model model);
+ public ResponseEntity<Resource> download(HttpServletRequest request);
+ public ResponseEntity<Resource> downloadAll(HttpServletRequest request);
+ 
   
 }

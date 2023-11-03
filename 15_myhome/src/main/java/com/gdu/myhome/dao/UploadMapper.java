@@ -16,6 +16,10 @@ public interface UploadMapper {
   public int getUploadCount();
   // 자바입장에서 map은 uploadDto의 목록임
   public List<UploadDto> getUploadList(Map<String, Object> map);
+  public UploadDto getUpload(int uploadNo);
+  public List<AttachDto> getAttachList(int uploadNo);
+  public AttachDto getAttach(int attachNo);
+  public int updateDownloadCount(int attachNo);
   
 
 }
