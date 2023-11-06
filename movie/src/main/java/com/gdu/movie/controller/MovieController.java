@@ -5,6 +5,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -28,21 +29,11 @@ public class MovieController {
     return movieServie.getMovieList();
   }
   
-//  @RequestMapping(value = "/searchMovie", method = RequestMethod.GET)
-//  @ResponseBody
-//  public Map<String, Object> searchMovie(@RequestParam(value = "column", required = true) String column,
-//                                         @RequestParam(value = "searchText", required = true) String searchText) {
-////    MovieDto movie = new MovieDto();
-////    movie.setColumn(column);
-////    movie.setSearchText(searchText);
-//
-//    return Map.of(); //movieService.searchMovie(movie);
-//  }
  
-  @GetMapping(value = "/searchMovie", produces = "application/json")
-  public Map<String, Object> searchMovie(HttpServletRequest request, HttpServletResponse response){
-    
-    return Map.of();
+  @GetMapping("/search.do") //list 처럼
+  public String search(HttpServletRequest request, Model model) {
+    movieServie.loadSearchList(request, model);
+    return "index";  // 포워드 - 리스트가 검색 결과로 바뀌어서 나오는 것으로 작성할거임
   }
 
 }

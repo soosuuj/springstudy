@@ -19,18 +19,20 @@
 <div>
 
   <h1 style="text-align: center;">Upload 게시글</h1>
-  <div>작성자 : ${upload.userDto.name} </div>
+  <div>작성자 : ${upload.userDto.name}</div>
   <div>작성일 : ${upload.createdAt}</div>
   <div>수정일 : ${upload.modifiedAt}</div>
   <div>제목 : ${upload.title}</div>
   <div>내용</div>
   <div>${upload.contents}</div>
   <div>
-    <form id="frm_btn" method="post">
-      <input type="hidden" name="uploadNo" value="${upload.uploadNo}">
-      <button type="button" id="btn_edit">편집</button>
-      <button type="button" id="btn_remove">삭제</button>
-    </form>
+    <c:if test="${sessionScope.user.userNo  == upload.userDto.userNo }"> 
+      <form id="frm_btn">
+        <input type="hidden" name="uploadNo" value="${upload.uploadNo}">
+        <button type="button" id="btn_edit">편집</button>
+        <button type="button" id="btn_remove">삭제</button>
+      </form>
+    </c:if>
   </div>
   
   <hr>
@@ -60,14 +62,27 @@
   
 <script>
 
-  const fnDownload = () => {
-  	  $('.attach').click(function(){
-  		  if(confirm('다운로드 할까요?')){
-  			  location.href = '${contextPath}/upload/download.do?attachNo=' + $(this).data('attach_no');
-  		  }
-  	  })
+  var frmBtn = $('#frm_btn');
+
+  const fnEdit = () => {
+	  $('#btn_edit').click(() => {
+		  frmBtn.attr('action', '${contextPath}/upload/edit.form');
+		  frmBtn.attr('method', 'get')  // 로그인 한 사람아니면 작동 안함. get.. 삭제할때는 post로 하면 안심~
+		  // post 주소창으로 삭제하는 것을 막기 위해 - 주소창으로 입력하면 걍 삭제 되니까 get으로 하면 안됨!!!!
+		  frmBtn.submit();
+	  })
   }
-    
+
+
+  const fnDownload = () => {
+	  $('.attach').click(function(){
+		  if(confirm('다운로드 할까요?')){
+			  location.href = '${contextPath}/upload/download.do?attachNo=' + $(this).data('attach_no');
+		  }
+	  })
+  }
+  
+  fnEdit();
   fnDownload();
   
 </script>

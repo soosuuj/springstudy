@@ -54,6 +54,14 @@ public class FreeController {
     return "redirect:/free/list.do";
   }
   
+  
+//  @PostMapping("/remove.do")
+//  public String remove(HttpServletRequest request, RedirectAttributes redirectAttributes ) {
+//    int removeResult = freeService.removeFree(Integer.parseInt(request.getParameter("freeNo")));
+//    redirectAttributes.addFlashAttribute("removeResult", removeResult);
+//    return "redirect:/free/list.do";
+//  }
+  
   @GetMapping("/search.do") //list 처럼
   public String search(HttpServletRequest request, Model model) {
     freeService.loadSearchList(request, model);

@@ -12,6 +12,6 @@ public interface MovieMapper {
   
   public List<MovieDto> getMovieList();
   public int getMovieCount();
-  public Map<String, Object> searchMovie(MovieDto movie);
-
+  public List<MovieDto> getSearchMovie(Map<String, Object> map);
+  
 }
