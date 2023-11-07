@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    /* CSS 초기화 */
+    * {
+      padding: 0;
+      margin: 0;
+      color: #333333;
+      box-sizing: border-box;
+    }
+    ul, li, ol, dl {
+      list-style-type: none;
+    }
+    a {
+      text-decoration: none;
+    }
+    button {
+      cursor: pointer;
+      border: 0;
+    }
+
+    /* 본문 */
+    body {
+      width: 100%;
+      height: 100%;
+      background-color: #fff;  
+    }
+    .container-doc {
+      width: 100%;
+      height: 100%;
+      font-size: 0;   
+
+    }
+    /* 상단 여백 주는 방법 */
+    /* 이미지만 주면 모르니까 이렇게 써주는 것, 검색 기능(검색엔진에 걸리게) */
+    .container-doc::before { 
+      content: '상단여백영역입니다.';
+      display: block;
+      height: 90px;
+
+    }
+    .inner-container{
+      height: 100%;
+    }
+    .doc-main{
+      padding-top: 50px;
+    }
+    .login-kakao{
+      display: block;
+      width: 88px;
+      height: 27px;
+      /* 좌우만 auto */
+      margin: 0 auto;
+      background: url('https://accounts.kakaocdn.net/images/pc/logo_kakao.png') no-repeat 0 0;
+      background-size: 100px 80px; 
+      /* 구멍을 내서 저 크기만큼만 본다 */
+    }
+    /* 실제 활용되는 이미지 크기 */
+    .content-article{
+      width: 580px;
+      height: 100%;
+      margin: 40px auto 42px;
+      padding: 0 69px;
+      border: 1px solid rgba(0, 0, 0, 0.12);
+      font-size: 12px;
+
+    }
+    .content-article > [class^="cont-"] {
+    padding: 50px;
+    }
+    .login-kakao .box-tf.fst {
+      margin: 4px;
+    }
+    .box-tf {
+      margin-bottom: 3px;
+      border-bottom: 2px solid #ccc;
+    }
+    /* 인라인 요소 : span, label, a */
+    .screen-out {
+      display: block;
+      width: 0;
+      height: 0;
+      overflow: hidden;
+    }
+    .tf-g{
+      width: 100%;
+      height: 45px;
+      padding: 10px 0 8px;
+      border: 0;
+      /* 선택해야 보이는 라인 outline */
+      outline: 0;
+      font-size: 18px;
+      color: #191919;
+      /* line-height 텍스트 줄 사이의 높이를 제어  */
+      line-height: 27px;
+    }
+    /* 간편로그인 간격 떨어짐 */
+    .set-login{
+      margin-top: 25px;
+      /* 여러개를 float 하는게 의미있지 한두개 하는건 의미없다! */
+    }
+    .item-choice {
+      float: left;
+    }
+    /* 내용이 없는 div 가 생김 */
+    .item-choice::after{
+      content: '';
+      display: block;
+      clear: both;
+    }
+    .inp-choice {
+      /* 체크박스 사라짐 */
+      appearance: none;
+    }
+    /* 라벨은 인라인이기 때문에 block 잡아야함 */
+    .lab-choice {
+      font-size: 14px;
+      color: rgba(0, 0, 0, 0.7);
+      /* 가져다 대면 커서 모양 바뀜 */
+      cursor: pointer;
+      /* 안쪽으로 미뤄넣음 앞에 아이콘 넣어서 체크박스 만들라고 */
+      padding-left: 28px;
+      /* 부모요소의 움직이는 영향을 없앰? */
+      position: relative;
+    }
+    .ico-comm {
+      /* 너비높이 가능하지만 다른 요소들도 허용? */
+      display: inline;
+      width: 20px;
+      height: 20px;
+      background: url('https://accounts.kakaocdn.net/images/pc/ico_comm.png') no-repeat 0 0;
+      background-size: 300px;
+      /* 반드시 부모(.lab-choice)가 특정 위치를 가지고 있어야함!! 위치 내맘대로 */
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+    /* 해당 클래스가 기본적으로 배경 이미지의 처음 위치(0, 0)를 사용하도록 지정한 것입니다. */
+    .ico-check{
+      background-position: 0 0;
+    }
+    .inp-choice:checked + .lab-choice .ico-check {
+      /* 오른쪽으로 이동 */
+      background-position: -25px 0;
+    }
+    .confirm-btn {
+      padding-top: 40px;
+      text-align: center;
+    }
+    .btn_g {
+      display: block;
+      width: 100%;
+      height: 50px;
+      border-radius: 4px;
+      font-weight: 500;
+      color: #191919;
+    }
+    .btn_g:hover{
+      background-color: #ebebeb;
+    }
+    .btn_g:active{
+      background-color: #e5e5e5;
+    }
+    .btn_g.highlight {
+      background-color: #fee500;
+    }
+    .btn_g.highlight:hover{
+      background-color: #Fada0a;
+    }
+    .btn_g.highlight:active{
+      background-color: #f2d00f;
+    }
+    .line-or {
+      display: block;
+      width: 100%;
+      /* 버튼 떨어지라고 상하만 주고 좌우는 안줌 */
+      padding: 15px 0;
+    }
+    .line-or::before, .line-or::after {
+      content: '';
+      display: inline-block;
+      /* 계산식 넣을 수 있음! */
+      width: calc(50% - 40px);
+      height: 1px;
+      background-color: rgba(0, 0, 0, 0.06);
+      /* 위치 조정 중 여백 줘서 미뤄내는게 가장 간편 */
+      margin: 6px;
+    }
+    /* 또는 자체 영역을 넓혀 선을 옆으로 미뤄냄 */
+    .txt-or {
+      display: inline-block;
+      width: 40px;
+    }
+    .info-user {
+      margin-top: 26px;
+    }
+    .link-join {
+      float: left;
+    }
+    .list-user {
+      float: right;
+      width: 150px;
+      display: flow-root;
+    }
+    .list-user li::before {
+      content: '';
+      float: left;
+      width: 1px;
+      height: 10px;
+      margin: 4px 10px;
+      background-color: rgba(0, 0, 0, 0.08);
+    }
+    .list-user li:first-of-type::before{
+      /* 없어져라 */
+      display: none;
+    }
+    /* .list-user 가 ul 태그임 */
+    .list-user li {
+      float : left;
+    }
+
+    
+  </style>
+</head>
+<body>
+
+    <div class="container-doc">
+      <div class="inner-container">
+        <div class="doc-main">
+          <div class="doc-title">
+            <h1 class="tit-service">
+              <span class="login-kakao">
+                <span class="ir_wa">kakao</span>
+              </span>
+            </h1>
+          </div>
+          <article class="content-article">
+            <div class="cont-login">
+              <div class="login-kakaomail">
+                <form>
+                  <div class="box-tf fst">
+                    <label for="loginKey--1" class="screen-out">계정정보 입력</label>
+                    <input type="text" id="loginKey--1" placeholder="카카오메일 아이디, 이메일, 전화번호" class="tf-g">
+                  </div>
+                  <div class="box-tf">
+                    <label for="password--2" class="screen-out">비밀번호 입력</label>
+                    <input type="password" id="password--2" placeholder="비밀번호" class="tf-g" autocomplete="off">
+                  </div>
+                  <div class="set-login">
+                    <div class="item-choice">
+                      <input type="checkbox" id="saveSignedIn" class="inp-choice">
+                      <label for="saveSignedIn" class="lab-choice">
+                        <!-- 아이콘이 많이 들어가면 이렇게 나눠서 클래스 여러개를 씀, 공백으로 분리 -->
+                        <span class="ico-comm ico-check"></span>
+                        간편로그인 정보 저장
+                      </label>
+                    </div>
+                  </div>
+                  <div class="confirm-btn">
+                    <button type="submit" class="btn_g highlight submit">로그인</button>
+                    <!-- 사이 얇은 선 -->
+                    <span class="line-or">
+                      <span class="txt-or">또는</span>
+                    </span>
+                    <button type="button" class="btn_g">QR코드 로그인</button>
+                  </div>
+                </form>
+                <div class="info-user">
+                  <a href="#" class="link-join">회원가입</a>
+                  <ul class="list-user"> <!-- 클래스 이름 수정 -->
+                    <li><a href="#" class="link-user">계정 찾기</a></li>
+                    <li><a href="#" class="link-user">비밀번호 찾기</a></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </div>
+  
+</body>
+</html>

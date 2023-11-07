@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  
+  <script>
+
+    /*
+      정규식 (regular expression)
+      1. 문자열이 원하는 패턴으로 구성되어 있는지 확인하기 위한 표현식이다.
+      2. 정규식 선언 방법
+        var regExpr = /정규식/;
+      3. 정규식 처리 메소드
+        1) String.match(/정규식/)
+          (1) 원하는 패턴인 경우      : not null 반환
+          (2) 원하는 패턴이 아닌 경우 : null 반환
+        2) /정규식/.test(String)
+          (1) 원하는 패턴인 경우      : true 반환
+          (2) 원하는 패턴이 아닌 경우 : false 반환
+    */
+    /*
+      정규식 작성 방법
+
+      1. 메타 문자
+         1) .      : 모든 문자를 의미한다.
+         2) a      : a를 의미한다.
+         3) a|b    : a 또는 b를 의미한다.
+         4) ^a     : a로 시작한다.
+         5) a$     : a로 끝난다.
+         6) a*     : a를 0번 이상 반복한다. (a가 없어도 좋다.)
+         7) a+     : a를 1번 이상 반복한다. (a가 있어야 한다.)
+         8) a{n}   : a를 n번 반복한다.
+         9) a{n,}  : a를 n번 이상 반복한다.
+        10) a{n,m} : a를 n번 이상 m번 이하 반복한다.
+
+      2. 문자 클래스
+         1) [.]     : 마침표(.)를 의미한다.
+         2) [a]     : a를 의미한다.
+         3) [ab]    : a 또는 b를 의미한다.
+         4) ^[a]    : a로 시작한다.
+         5) [a]$    : a로 끝난다.
+         6) [^a]    : a를 제외한다.
+         7) [0-9]   : 숫자를 의미한다.
+         8) [A-Z]   : 대문자를 의미한다.
+         9) [a-z]   : 소문자를 의미한다.
+        10) [가-힣] : 한글을 의미한다.
+
+      3. 이스케이프
+         1) \d : 숫자를 의미한다. (digit)
+         2) \D : 숫자가 아니다.
+         3) \w : 숫자,영문,밑줄을 의미한다. [0-9A-Za-z_]
+         4) \W : 숫자,영문,밑줄이 아니다.
+    */
+
+  </script>
+
+
+  <div>
+    <h1>핸드폰 번호 검사</h1>
+    <input type="text" id="mobile">
+    <input type="button" value="검사" id="btn_mobile_check">
+  </div>
+  <script>
+    /*
+      이벤트 대상   : 검사 버튼
+      이벤트 타입   : click
+      이벤트 리스너 : function(){ 입력된 핸드폰 번호 검사 }
+    */
+    document.getElementById('btn_mobile_check').addEventListener('click', function(){
+      // 핸드폰 번호 검사 정규식 (010-숫자4개-숫자4개)
+      var regMobile = /^010-[0-9]{4}-\d{4}$/;
+      // 입력된 핸드폰 번호
+      var mobile = document.getElementById('mobile').value;
+      // 정규식 체크
+      if(regMobile.test(mobile)){
+        alert('핸드폰 번호가 맞습니다.');
+      } else {
+        alert('핸드폰 번호가 아닙니다.');
+      }
+    })
+  </script>
+
+  <hr>
+
+  <div>
+    <h1>날짜 검사</h1>
+    <input type="text" id="date">
+    <input type="button" value="검사" id="btn_date_check">
+  </div>
+  <script>
+    document.getElementById('btn_date_check').addEventListener('click', function(){
+      var regDate = /^(19[0-9]{2}|20[0-9]{2})-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/;
+      var date = document.getElementById('date').value;
+      if(regDate.test(date)){
+        alert('날짜가 맞습니다.');
+      } else {
+        alert('날짜가 아닙니다.');
+      }
+    })
+  </script>
+
+  <hr>
+
+  <div>
+    <h1>우편번호 검사</h1>
+    <form action="#" id="frm_postcode">
+      <input type="text" id="postcode">
+      <button type="submit">검사</button>
+    </form>
+  </div>
+  <script>
+    document.getElementById('frm_postcode').addEventListener('submit', function(event){
+      var postcode = document.getElementById('postcode').value;
+      var validPostcode = /^[0-9]{5}$/.test(postcode);
+      if(!validPostcode){
+        alert('우편번호가 아닙니다.');
+        event.preventDefault();
+        return;
+      }
+    })
+  </script>
+
+  <hr>
+
+  <div>
+    <h1>아이디 검사하기</h1>
+    <input type="text" id="id">
+    <input type="button" value="검사" id="btn_id_check">
+  </div>
+  <script>
+    document.getElementById('btn_id_check').addEventListener('click', function(){
+      // 아이디 : 4자 이상, 영문자,숫자,-,_로 구성
+      var regId = /^[A-Za-z0-9-_]{4,}$/;
+      var id = document.getElementById('id').value;
+      if(regId.test(id)){
+        alert('아이디가 맞습니다.');
+      } else {
+        alert('아이디가 아닙니다.');
+      }
+    })
+  </script>
+
+  <hr>
+
+  <div>
+    <h1>비밀번호 검사</h1>
+    <input type="password" id="pw">
+    <input type="button" value="검사" id="btn_pw_check">
+  </div>
+  <script>
+    document.getElementById('btn_pw_check').addEventListener('click', function(){
+      var pw = document.getElementById('pw').value;
+      // 비밀번호 : 8~20자, 영문,숫자,특수문자, 2가지 이상 포함
+      var validPwCount = /[A-Z]/.test(pw)          // 대문자가 있으면   true
+                       + /[a-z]/.test(pw)          // 소문자가 있으면   true
+                       + /[0-9]/.test(pw)          // 숫자가 있으면     true
+                       + /[^A-Za-z0-9]/.test(pw);  // 특수문자가 있으면 true
+      if(pw.length >= 8 && pw.length <= 20 && validPwCount >= 2){
+        alert('사용 가능한 비밀번호입니다.');
+      } else {
+        alert('사용할 수 없는 비밀번호입니다.');
+      }
+    })
+  </script>
+
+  <hr>
+
+  <div>
+    <h1>이메일 검사</h1>
+    <input type="text" id="email">
+    <input type="button" value="검사" id="btn_email_check">
+  </div>
+  <script>
+    document.getElementById('btn_email_check').addEventListener('click', function(){
+      var regEmail = /^[A-Za-z0-9-_]+@[A-Za-z0-9]{2,}([.][A-Za-z]{2,6}){1,2}$/;
+      var email = document.getElementById('email').value;
+      if(regEmail.test(email)){
+        alert('올바른 이메일입니다.');
+      } else {
+        alert('잘못된 이메일입니다.');
+      }
+    })
+  </script>
+
+  <hr>
+
+  <!-- 문제. 아이디/비밀번호/비밀번호확인/이메일 입력받아서 서브밋하기 -->
+  <div>
+    <form action="#" id="frm_register">
+      <div>
+        <label for="user_id">아이디</label>
+        <input type="text" id="user_id" autofocus>
+      </div>
+      <div>
+        <label for="user_pw">비밀번호</label>
+        <input type="password" id="user_pw">
+      </div>
+      <div>
+        <label for="user_pw2">비밀번호 확인</label>
+        <input type="password" id="user_pw2">
+      </div>
+      <div>
+        <label for="user_email">이메일</label>
+        <input type="text" id="user_email">
+      </div>
+      <div>
+        <button>양식 제출하기</button>
+      </div>
+    </form>
+  </div>
+  <style>
+    label {
+      display: inline-block;
+      width: 150px;
+    }
+  </style>
+  <script>
+    document.getElementById('frm_register').addEventListener('submit', function(event){
+      // 아이디 체크
+      var regUserId = /^[A-Za-z0-9-_]{4,}$/;
+      var userId = document.getElementById('user_id').value;
+      var validUserId = regUserId.test(userId);
+      if(!validUserId){
+        alert('올바른 아이디를 입력하세요.');
+        document.getElementById('user_id').focus();
+        event.preventDefault();
+        return;
+      }
+      // 비밀번호 체크
+      var userPw = document.getElementById('user_pw').value;
+      var userPw2 = document.getElementById('user_pw2').value;
+      var validUserPwCount = /[A-Z]/.test(userPw)          // 대문자가 있으면   true
+                           + /[a-z]/.test(userPw)          // 소문자가 있으면   true
+                           + /[0-9]/.test(userPw)          // 숫자가 있으면     true
+                           + /[^A-Za-z0-9]/.test(userPw);  // 특수문자가 있으면 true
+      if(userPw.length < 8 || userPw.length > 20 || validUserPwCount < 2 || userPw !== userPw2){
+        alert('올바른 비밀번호를 입력하세요.');
+        document.getElementById('user_pw').focus();
+        event.preventDefault();
+        return;
+      }
+      // 이메일 체크
+      var regUserEmail = /^[A-Za-z0-9-_]+@[A-Za-z0-9]{2,}([.][A-Za-z]{2,6}){1,2}$/;
+      var userEmail = document.getElementById('user_email').value;
+      var validUserEmail = regUserEmail.test(userEmail);
+      if(!validUserEmail){
+        alert('올바른 이메일을 입력하세요.');
+        document.getElementById('user_email').focus();
+        event.preventDefault();
+        return;
+      }
+    })
+  </script>
+
+</body>
+</html>

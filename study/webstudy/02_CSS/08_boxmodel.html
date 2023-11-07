@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+
+  <style>
+    /* 블록 요소는 width, height를 지정할 수 있다.*/
+    .wrap1 > div {
+      width: 100px;
+      height: 100px;
+      border: 1px solid gray;
+      background-color: lightgray;
+    }
+    /* 인라인 요소는 width, height를 지정할 수 없다.*/    
+    .wrap1 > span {
+      width: 100px;
+      height: 100px;
+      border: 1px solid gray;
+      background-color: lightgray;   
+    }
+  </style>
+
+  <div class="wrap1">
+    <div>블록 요소</div>
+    <span>인라인 요소</span>
+  </div>
+  
+  <hr>
+
+  <style>
+    /* 부모 */
+    .wrap2 {
+      width: 200px;
+      height: 200px;
+      border: 1px solid gray;
+    }
+    /* 자식 : 부모기준으로 % 값을 가질 수 있다. */
+    .wrap2 > .box1 {
+      width: 100%;
+      height: 50%;
+      border: 1px solid crimson;
+    }
+    /* 자식 : 부모보다 커지면 부모 영역 밖으로 나간다. */
+    .wrap2 > .box2 {
+      width: 300px;
+      height: 105px;
+      border: 1px solid crimson;
+    }
+  </style>
+
+  <div class="wrap2">
+    <div class="box1">box1</div>
+    <div class="box2">box2</div>
+  </div>
+
+  <hr>
+
+  <style>
+    .wrap3 > div {
+      width: 100px;
+      height: 100px;
+    }
+    /* 모든 테두리 지정하기 */
+    .wrap3 > .box1 {
+      border: 1px solid gray; /* border-width border-style border-color */
+    }
+    /* 원하는 테두리 지정하기 */
+    .wrap3 > .box2 {
+      border-top: 1px solid crimson;
+      border-right: 1px solid crimson;
+      border-bottom: 1px solid crimson;
+      border-left: 1px solid crimson;
+    }
+    /* 모서리 다듬기 */
+    .wrap3 > .box3 {
+      border: 1px solid gray;
+      border-radius: 5px;
+      border-radius: 5px 10px;          /*대각선 방향으로 값을 부여받음*/
+      border-radius: 5px 10px 5px;    
+      border-radius: 5px 10px 5px 10px;  /*밑 3개 결과 값 같음*/
+    }
+  </style>
+
+  <div class="wrap3">
+    <div class="box1">box1</div>
+    <div class="box2">box2</div>
+    <div class="box3">box3</div>
+  </div>
+
+  <hr>
+
+  <style>
+    .wrap4 > div {
+      width: 100px;
+      height: 100px;
+      border: 1px solid gray;
+    }
+    /* 내부여백(테두리와 내부 컨텐츠 사이 여백) */
+    .wrap4 > .box1 {
+      padding: 10px;  /* 똑같은 태그 쓰면 아래 태그로 덮어써짐 */
+      padding: 10px 20px;
+      padding: 10px 20px 10px;
+      padding: 10px 20px 10px 20px; /* 상단여백부터 시계방향 적용 */
+    }
+    /* 원하는 내부여백 지정하기 */
+    .wrap4 > .box2 {
+      padding-top: 10px;
+      padding-right: 20px;
+      padding-bottom: 10px;
+      padding-left: 20px;
+    }
+  </style>
+
+  <div class="wrap4">
+    <div class="box1">box1</div>
+    <div class="box2">box2</div>
+  </div>
+
+  <hr>
+
+  <style>
+
+    /*
+      box-sizing 속성
+
+      1. content-box 
+        1) 디폴트(생략 가능)
+        2) width, heigth는 내용(content)의 크기를 의미한다.
+        3) box 크기는 width, height + border + padding으로 계산한다.
+      
+      2. border-box -> 레이아웃 잡을 때는 다 이걸로 함!!
+        1) width, height는 테두리(border)까지의 크기를 의미한다. (다 포함)
+        2) box 크기는 width/height이다.
+    */
+
+    .wrap5 > .box1 {
+      box-sizing:content-box; /* 디폴트 값(생략 가능) */
+      width: 100px;
+      height: 100px;
+      border: 1px solid gray;
+      padding: 10px;
+      /* box1 크기 : 내용물(100px) + 테두리(1px * 2) + 내부여백(10px *2) = 122 */
+    }
+    .wrap5 > .box2 {
+      box-sizing: border-box;
+      width: 100px;
+      height: 100px;
+      border: 1px solid gray;
+      padding: 10px;
+      /* box2 크기 : 100px = 내용(78px) + 테두리(1px *2) + 내부여백 (10px *2) */
+    }
+  </style>
+  <div class="wrap5">
+    <div class="box1">box1</div>
+    <div class="box2">box2</div>
+  </div>
+
+  <hr>
+
+  <style>
+
+    .wrap6 {
+      width: 500px; /*높이를 지정하지 않으면 자식들이 부모의 높이를 키워나감 - 알아서 높이 설정 */
+      border: 1px solid crimson;
+    }
+
+    .wrap6 > div {
+      box-sizing: border-box;
+      width: 100px;
+      height: 100px;
+      border: 1px solid gray;
+    }
+    /* 외부여백 : border 바깥쪽의 여백 */
+    .wrap6 > .box1 {
+      margin: 10px;  
+      margin: 10px 20px;              /* 상하 10, 좌우 20 */
+      margin: 10px 20px 10px;         /* 위 10, 좌우 20 아래 10 */
+      margin: 10px 20px 10px 20px;    /* 위 10, 오 20 아 10 왼 20 */
+    }
+    /* 원하는 외부여백 지정하기 */
+    .wrap6 > .box2 {
+      margin-top: 10px;    
+      margin-right: 20px;
+      margin-bottom: 10px;
+      margin-left: 20px;
+    }
+    /* box 가운데 배치 ( 좌우 margin을 auto로 설정) */
+    .wrap6 > .box3 { /* 엄청 많이 쓰니까 꼭 기억!!*/
+      margin: 0 auto;
+    }
+
+  </style>
+  <div class="wrap6">
+    <div class="box1">box1</div>
+    <div class="box2">box2</div>
+    <div class="box3">box3</div>
+  </div>
+
+</body>
+</html>
